@@ -7,8 +7,7 @@ INSERT INTO
         ancestry,
         background,
         traits,
-        heritage,
-        class_id
+        heritage
     )
 VALUES (
         'a1b2c3d4-e5f6-7890-abcd-ef0123456789',
@@ -18,6 +17,5 @@ VALUES (
         'Human',
         'Soldier',
         'Brave and Strong',
-        'Standard Human Heritage',
-        'c2573746-c9e8-4e15-9d03-65f166981546'
+        'Standard Human Heritage'
     );

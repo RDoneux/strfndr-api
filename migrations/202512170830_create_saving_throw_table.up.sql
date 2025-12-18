@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS saving_throws (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    INDEX idx_character_id (character_id),
+    FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (proficiency_level_id) REFERENCES skill_proficiencies(id) ON DELETE CASCADE ON UPDATE CASCADE,
 
-    FOREIGN KEY (character_id) REFERENCES characters(id)
+    INDEX idx_character_id (character_id)
 )

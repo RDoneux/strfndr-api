@@ -83,3 +83,16 @@ FROM
 WHERE
 	cs.character_id = 'a1b2c3d4-e5f6-7890-abcd-ef0123456789';
 ```
+
+### Select Character Weapons
+
+```sql
+SELECT
+	c.character_name,
+	rw.name,
+	rw.damage
+FROM
+	ranged_weapons rw
+	LEFT JOIN characters c ON rw.character_id = c.id
+WHERE c.id = 'a1b2c3d4-e5f6-7890-abcd-ef0123456789';
+```

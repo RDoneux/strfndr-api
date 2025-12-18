@@ -15,5 +15,13 @@ CREATE TABLE IF NOT EXISTS ranged_weapons (
     type VARCHAR(100) DEFAULT NULL,
     notes TEXT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE ON UPDATE CASCADE,
+
+    INDEX idx_character_id (character_id),
+    INDEX idx_name (name),
+    INDEX idx_level (level),
+    INDEX idx_category (category),
+    INDEX idx_type (type)
 );

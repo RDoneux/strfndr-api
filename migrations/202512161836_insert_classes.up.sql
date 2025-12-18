@@ -1,3 +1,4 @@
+-- CREATE SOME CLASSES
 INSERT INTO
     classes (
         id,
@@ -31,3 +32,11 @@ VALUES (
         6,
         'Technomancer, Class'
     );
+
+-- ASSIGN A CLASS TO THE TEST CHARACTER
+UPDATE
+    characters
+SET
+    class_id = 'c2573746-c9e8-4e15-9d03-65f166981546'
+WHERE
+    id = 'a1b2c3d4-e5f6-7890-abcd-ef0123456789';
