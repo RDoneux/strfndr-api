@@ -22,4 +22,17 @@ INSERT INTO ranged_weapons (
     2.5,
     'Small Arm',
     'Projectile'
+),
+(
+    'a1b2c3d4-e5f6-7890-abcd-ef0123456789',
+    'Vibroblade',
+    'Melee (adjacent)',
+    '1d8 S (Slashing)',
+    NULL,
+    NULL,
+    FALSE,
+    FALSE,
+    8.0,
+    'Small Arm',
+    'Melee'
 );

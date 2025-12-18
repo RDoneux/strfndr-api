@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS ranged_weapons (
     name VARCHAR(255) NOT NULL,
     `range` VARCHAR(100) NOT NULL,
     damage VARCHAR(100) NOT NULL,
-    capacity VARCHAR(100) NOT NULL DEFAULT '0',
+    capacity VARCHAR(100),
     `usage` VARCHAR(100) DEFAULT NULL,
     is_magnetic BOOLEAN NOT NULL DEFAULT FALSE,
     is_experimental BOOLEAN NOT NULL DEFAULT FALSE,
