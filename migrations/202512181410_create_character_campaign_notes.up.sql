@@ -1,0 +1,28 @@
+CREATE TABLE IF NOT EXISTS character_campaign_notes (
+    id VARCHAR(36) PRIMARY KEY DEFAULT(UUID()),
+    character_id VARCHAR(36) NOT NULL,
+    note TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (character_id) REFERENCES characters (id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS character_campaign_people (
+    id VARCHAR(36) PRIMARY KEY DEFAULT(UUID()),
+    character_id VARCHAR(36) NOT NULL,
+    person_name VARCHAR(100),
+    person_description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (character_id) REFERENCES characters (id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS character_campaign_locations (
+    id VARCHAR(36) PRIMARY KEY DEFAULT(UUID()),
+    character_id VARCHAR(36) NOT NULL,
+    location_name VARCHAR(100),
+    location_description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (character_id) REFERENCES characters (id) ON DELETE CASCADE
+)
