@@ -122,7 +122,7 @@ VALUES (
 --
 
 INSERT INTO
-    character_descriptor_pool_modifiers (
+    character_descriptors_pool_modifiers (
         descriptor_id,
         pool_type,
         modifier_value
@@ -216,7 +216,7 @@ VALUES (
 --
 
 INSERT INTO
-    character_descriptor_trainings (
+    character_descriptors_trainings (
         descriptor_id,
         skill_id,
         training_level
@@ -398,7 +398,7 @@ VALUES
 --
 
 INSERT INTO
-    character_descriptor_inabilities (descriptor_id, skill_id)
+    character_descriptors_inabilities (descriptor_id, skill_id)
 VALUES
     -- Charming
     (
