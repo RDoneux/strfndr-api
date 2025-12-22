@@ -11,5 +11,5 @@ VALUES (
         'Test Character',
         (SELECT id FROM character_descriptors WHERE name = 'Swift'),
         '8c606521-ce04-4725-ade4-e342768b266f',
-        'b2c3d4e5-f6a7-8901-bcde-f23456789012'
+        (SELECT id FROM character_focus WHERE name = 'Masters Defense')
     )
