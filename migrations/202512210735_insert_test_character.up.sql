@@ -9,7 +9,7 @@ INSERT INTO
 VALUES (
         'ec5b72b2-4013-4676-88c7-bcf7f7d51a92',
         'Test Character',
-        '618e8216-6627-422a-8329-ba3ec4abb3eb',
+        (SELECT id FROM character_descriptors WHERE name = 'Swift'),
         '8c606521-ce04-4725-ade4-e342768b266f',
         'b2c3d4e5-f6a7-8901-bcde-f23456789012'
     )
