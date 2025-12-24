@@ -575,7 +575,7 @@ VALUES
         SELECT id
         FROM skills
         WHERE
-            name = 'Initiative'
+            name = 'Detecting Danger'
     ),
     'Trained'
 ),
@@ -738,7 +738,7 @@ VALUES
         SELECT id
         FROM skills
         WHERE
-            name = 'Intellect'
+            name = 'Detecting Danger'
     ),
     'Trained'
 );
@@ -1000,7 +1000,7 @@ VALUES
         SELECT id
         FROM skills
         WHERE
-            name = 'Initiative'
+            name = 'Detecting Danger'
     )
 );
 -- Initiative / hasty actions

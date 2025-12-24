@@ -338,7 +338,7 @@ VALUES
 -- Fights With Panache
 (
     (SELECT id FROM character_focus WHERE name = 'Fights With Panache'),
-    (SELECT id FROM skills WHERE name = 'Initiative'),
+    (SELECT id FROM skills WHERE name = 'Detecting Danger'),
     'Trained'
 ),
 
@@ -394,7 +394,7 @@ VALUES
 -- Masters Weaponry
 (
     (SELECT id FROM character_focus WHERE name = 'Masters Weaponry'),
-    (SELECT id FROM skills WHERE name = 'Initiative'),
+    (SELECT id FROM skills WHERE name = 'Detecting Danger'),
     'Trained'
 ),
 
