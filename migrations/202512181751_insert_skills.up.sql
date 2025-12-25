@@ -172,10 +172,23 @@ VALUES
     'Might',
     'Using fear or threats to influence others.'
 ),
-
--- Detecting Danger
 (
     'Detecting Danger',
     'Intellect',
     'Spotting traps, ambushes, or potential hazards.'
+),
+(
+    'Fletcher',
+    'Custom',
+    'You are trainined in making arrows.'
+),
+(
+    'Bowyer',
+    'Custom',
+    'You are trained in making bows.'
+),
+(
+    'Using Bows',
+    'Custom',
+    'You are trained in using bows.'
 );

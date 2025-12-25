@@ -3,11 +3,13 @@ INSERT INTO
         name,
         descriptor_id,
         type_id,
-        focus_id
+        focus_id,
+        tier
     )
 VALUES (
         'Test Character',
         (SELECT id FROM character_descriptors WHERE name = 'Swift'),
         (SELECT id FROM character_types WHERE name = 'Nano'),
-        (SELECT id FROM character_focus WHERE name = 'Masters Defense')
+        (SELECT id FROM character_focus WHERE name = 'Carries a Quiver'),
+        6
     )

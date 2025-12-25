@@ -2,8 +2,19 @@ CREATE TABLE IF NOT EXISTS character_focus (
     id VARCHAR(36) PRIMARY KEY DEFAULT(UUID()),
     name VARCHAR(100) NOT NULL UNIQUE,
     description TEXT,
+    connection TEXT,
     source_book VARCHAR(100),
     special_effect TEXT
+);
+
+CREATE TABLE IF NOT EXISTS character_focus_tier_classifications (
+    id CHAR(36) PRIMARY KEY DEFAULT(UUID()),
+    focus_id CHAR(36) NOT NULL,
+    tier INT NOT NULL,
+    description TEXT,
+    classification VARCHAR(100) NOT NULL,
+    FOREIGN KEY (focus_id) REFERENCES character_focus (id) ON DELETE CASCADE,
+    UNIQUE (focus_id, tier)
 );
 
 CREATE TABLE IF NOT EXISTS character_focus_pool_modifiers (
@@ -20,10 +31,12 @@ CREATE TABLE IF NOT EXISTS character_focus_pool_modifiers (
 CREATE TABLE IF NOT EXISTS character_focus_trainings (
     id CHAR(36) PRIMARY KEY DEFAULT(UUID()),
     focus_id CHAR(36) NOT NULL,
+    classification_id CHAR(36),
     skill_id CHAR(36) NOT NULL,
     training_level ENUM('Trained', 'Specialised'),
     FOREIGN KEY (focus_id) REFERENCES character_focus (id) ON DELETE CASCADE,
-    FOREIGN KEY (skill_id) REFERENCES skills (id) ON DELETE CASCADE
+    FOREIGN KEY (skill_id) REFERENCES skills (id) ON DELETE CASCADE,
+    FOREIGN KEY (classification_id) REFERENCES character_focus_tier_classifications (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS character_focus_inabilities (
