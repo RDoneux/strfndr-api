@@ -17,14 +17,14 @@ VALUES (
     (
         'Carries a Quiver',
         'Skilled with bows and projectiles, you always have the right ammunition at hand.',
-        'Pick one other PC. You have found that this character is particularly tuned into your mental powers. While you''re within short range of them, the two of you are always in telepathic contacct, and they are never harmed by your Psychic Bursts.',
+        'Pick one other PC to be the true friend who gave you the excellent bow that you currently use. Secretly pick a second PC (preferably one who is likely to get in the way of your attacks). When you miss with a bow and the GM rules that you struck someone other than your target, you hit the second character, if possible.',
         'Numenera Core Rulebook (2013)',
         'Gain +1 to attack rolls with ranged weapons.'
     ),
     (
         'Commands Mental Powers',
         'You harness the mind to manipulate objects and people, tapping into psychic energies.',
-        '',
+        'Pick one other PC. You have found that this character is particularly tuned into your mental powers. While you''re within short range of them the two of you are always in telepathic contact, and they are never harmed by your Pyschic Bursts.',
         'Numenera Core Rulebook (2013)',
         'Once per day, attempt a mental power task with reduced difficulty.'
     ),
