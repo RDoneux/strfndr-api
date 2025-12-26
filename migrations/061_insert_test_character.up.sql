@@ -11,5 +11,5 @@ VALUES (
         (SELECT id FROM character_descriptors WHERE name = 'Swift'),
         (SELECT id FROM character_types WHERE name = 'Nano'),
         (SELECT id FROM character_focus WHERE name = 'Commands Mental Powers'),
-        6
+        3
     )
