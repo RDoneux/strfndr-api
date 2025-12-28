@@ -1,0 +1,4 @@
+CREATE TABLE equipment (
+    item_id VARCHAR(36) PRIMARY KEY,
+    FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE
+)

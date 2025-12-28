@@ -1,0 +1,4 @@
+CREATE TABLE traits (
+    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    name VARCHAR(100) NOT NULL
+);
