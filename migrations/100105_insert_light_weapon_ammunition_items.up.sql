@@ -4,7 +4,7 @@ INSERT INTO items (
     weight,
     price,
     item_type,
-    can_be_equipped
+    equip_location
 ) VALUES 
     (
         'Dart',
@@ -12,7 +12,7 @@ INSERT INTO items (
         1.0,
         0.25,
         'AMMUNITION',
-        FALSE
+        'NONE'
     ),
     (
         '5-disk buzzer magazine',
@@ -20,7 +20,7 @@ INSERT INTO items (
         1.0,
         1,
         'AMMUNITION',
-        FALSE
+        'NONE'
     );
 
 INSERT INTO ammunition (

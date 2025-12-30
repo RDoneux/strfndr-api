@@ -5,7 +5,7 @@ INSERT INTO
         weight,
         price,
         item_type,
-        can_be_equipped
+        equip_location
     )
 VALUES (
         'Battleaxe',
@@ -13,7 +13,7 @@ VALUES (
         1.0,
         3,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Bow',
@@ -21,7 +21,7 @@ VALUES (
         1.0,
         3,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Broadsword',
@@ -29,7 +29,7 @@ VALUES (
         1.0,
         3,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Crank Crossbow',
@@ -37,7 +37,7 @@ VALUES (
         1.0,
         10,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Crossbow',
@@ -45,7 +45,7 @@ VALUES (
         1.0,
         5,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Flail',
@@ -53,7 +53,7 @@ VALUES (
         1.0,
         3,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Hammer',
@@ -61,7 +61,7 @@ VALUES (
         1.0,
         2,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Javelin',
@@ -69,7 +69,7 @@ VALUES (
         1.0,
         2,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Mace',
@@ -77,7 +77,7 @@ VALUES (
         1.0,
         2,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Polearm',
@@ -85,7 +85,7 @@ VALUES (
         1.0,
         3,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Quarterstaff',
@@ -93,7 +93,7 @@ VALUES (
         1.0,
         2,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Spear',
@@ -101,7 +101,7 @@ VALUES (
         1.0,
         2,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Verred',
@@ -109,7 +109,7 @@ VALUES (
         1.0,
         2,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Yulk',
@@ -117,7 +117,7 @@ VALUES (
         1.0,
         2,
         'WEAPON',
-        TRUE
+        'HANDS'
     );
 
 INSERT INTO

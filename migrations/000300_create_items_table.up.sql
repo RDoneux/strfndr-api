@@ -5,5 +5,5 @@ CREATE TABLE items (
     weight DECIMAL(10,2) DEFAULT 0.0,
     price DECIMAL(10,2) DEFAULT 0.0,
     item_type ENUM ('WEAPON', 'ARMOUR', 'CYPHER', 'ARTIFACT', 'EQUIPMENT', 'ODDITY', 'AMMUNITION') NOT NULL,
-    can_be_equipped BOOLEAN DEFAULT FALSE
+    equip_location ENUM ('HEAD', 'EYES', 'EARS', 'NECK', 'TORSO', 'LEGS', 'HANDS', 'FOREARM', 'FEET', 'NONE') DEFAULT 'NONE'
 )

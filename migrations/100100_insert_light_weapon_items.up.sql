@@ -5,7 +5,7 @@ INSERT INTO
         weight,
         price,
         item_type,
-        can_be_equipped
+        equip_location
     )
 VALUES (
         'Blowgun',
@@ -13,7 +13,7 @@ VALUES (
         1.0,
         1,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Buzzer',
@@ -21,7 +21,7 @@ VALUES (
         1.0,
         25,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Club',
@@ -29,7 +29,7 @@ VALUES (
         1.0,
         3,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Dagger',
@@ -37,7 +37,7 @@ VALUES (
         1.0,
         5,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Dart Thrower',
@@ -45,7 +45,7 @@ VALUES (
         1.0,
         8,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Forearm Blade',
@@ -53,7 +53,7 @@ VALUES (
         1.0,
         4,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Knife',
@@ -61,7 +61,7 @@ VALUES (
         1.0,
         1,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Punching Dagger',
@@ -69,7 +69,7 @@ VALUES (
         1.0,
         1,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Rapier',
@@ -77,7 +77,7 @@ VALUES (
         1.0,
         2,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Razor ring',
@@ -85,7 +85,7 @@ VALUES (
         1.0,
         1,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Sisk',
@@ -93,7 +93,7 @@ VALUES (
         1.0,
         1,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Whip',
@@ -101,7 +101,7 @@ VALUES (
         1.0,
         2,
         'WEAPON',
-        TRUE
+        'HANDS'
     );
 
 INSERT INTO

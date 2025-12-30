@@ -4,7 +4,7 @@ INSERT INTO items (
     weight,
     price,
     item_type,
-    can_be_equipped
+    equip_location
 ) VALUES 
     (
         'Arrow',
@@ -12,7 +12,7 @@ INSERT INTO items (
         1.0,
         0.40,
         'AMMUNITION',
-        FALSE
+        'NONE'
     ),
     (
         'Bolt',
@@ -20,7 +20,7 @@ INSERT INTO items (
         1.0,
         0.40,
         'AMMUNITION',
-        FALSE
+        'NONE'
     );
 
 INSERT INTO ammunition (

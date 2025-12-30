@@ -5,7 +5,7 @@ INSERT INTO
         weight,
         price,
         item_type,
-        can_be_equipped
+        equip_location
     )
 VALUES (
         'Greataxe',
@@ -13,7 +13,7 @@ VALUES (
         1.0,
         5.0,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Greatsword',
@@ -21,7 +21,7 @@ VALUES (
         1.0,
         5.0,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Heavy Crossbow',
@@ -29,7 +29,7 @@ VALUES (
         1.0,
         7.0,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Maul',
@@ -37,7 +37,7 @@ VALUES (
         1.0,
         4.0,
         'WEAPON',
-        TRUE
+        'HANDS'
     ),
     (
         'Sword staff',
@@ -45,7 +45,7 @@ VALUES (
         1.0,
         5.0,
         'WEAPON',
-        TRUE
+        'HANDS'
     );
 
 INSERT INTO

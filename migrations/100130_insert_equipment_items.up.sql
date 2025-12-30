@@ -4,7 +4,7 @@ INSERT INTO items (
     weight,
     price,
     item_type,
-    can_be_equipped
+    equip_location
 ) VALUES 
     (
         'Backpack',
@@ -12,7 +12,7 @@ INSERT INTO items (
         1.0,
         2,
         'EQUIPMENT',
-        FALSE
+        'TORSO'
     ),
     (
         'Back of light tools',
@@ -20,7 +20,7 @@ INSERT INTO items (
         1.0,
         10,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Back of heavy tools',
@@ -28,7 +28,7 @@ INSERT INTO items (
         1.0,
         12,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Bedroll',
@@ -36,7 +36,7 @@ INSERT INTO items (
         1.0,
         2,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Book',
@@ -44,7 +44,7 @@ INSERT INTO items (
         1.0,
         20,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Burlap sack',
@@ -52,7 +52,7 @@ INSERT INTO items (
         1.0,
         1,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Compass',
@@ -60,7 +60,7 @@ INSERT INTO items (
         1.0,
         10,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Crowbar',
@@ -68,7 +68,7 @@ INSERT INTO items (
         1.0,
         2,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Disguise kit',
@@ -76,7 +76,7 @@ INSERT INTO items (
         1.0,
         12,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Explorer''s pack',
@@ -84,7 +84,7 @@ INSERT INTO items (
         1.0,
         20,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'First aid kit',
@@ -92,7 +92,7 @@ INSERT INTO items (
         1.0,
         10,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Grappling hook',
@@ -100,7 +100,7 @@ INSERT INTO items (
         1.0,
         3,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Lockpicks',
@@ -108,7 +108,7 @@ INSERT INTO items (
         1.0,
         5,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Matchsticks',
@@ -116,7 +116,7 @@ INSERT INTO items (
         1.0,
         1,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Musical Instrument',
@@ -124,7 +124,7 @@ INSERT INTO items (
         1.0,
         10,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Pouch',
@@ -132,7 +132,7 @@ INSERT INTO items (
         1.0,
         1,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Rope (15 meters)',
@@ -140,7 +140,7 @@ INSERT INTO items (
         1.0,
         2,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Shield',
@@ -148,7 +148,7 @@ INSERT INTO items (
         1.0,
         3,
         'EQUIPMENT',
-        TRUE
+        'FOREARM'
     ),
     (
         'Tent',
@@ -156,7 +156,7 @@ INSERT INTO items (
         1.0,
         3,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Torch',
@@ -164,7 +164,7 @@ INSERT INTO items (
         1.0,
         1,
         'EQUIPMENT',
-        FALSE
+        'HANDS'
     ),
     (
         'Ale',
@@ -172,7 +172,7 @@ INSERT INTO items (
         1.0,
         3,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Wine',
@@ -180,7 +180,7 @@ INSERT INTO items (
         1.0,
         3,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Boots',
@@ -188,7 +188,7 @@ INSERT INTO items (
         1.0,
         1,
         'EQUIPMENT',
-        FALSE
+        'FEET'
     ),
     (
         'Cigarettes',
@@ -196,7 +196,7 @@ INSERT INTO items (
         1.0,
         2,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Clothing',
@@ -204,7 +204,7 @@ INSERT INTO items (
         1.0,
         1,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Meal',
@@ -212,7 +212,7 @@ INSERT INTO items (
         1.0,
         1,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     ),
     (
         'Rations (1 day)',
@@ -220,7 +220,7 @@ INSERT INTO items (
         1.0,
         2,
         'EQUIPMENT',
-        FALSE
+        'NONE'
     );
 
 INSERT INTO equipment (
