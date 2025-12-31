@@ -26,9 +26,9 @@ CREATE TABLE character_types_skills (
 CREATE TABLE character_types_inabilities (
     id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     character_type_id VARCHAR(36),
-    skill_id VARCHAR(36),
+    inability_id VARCHAR(36),
     FOREIGN KEY (character_type_id) REFERENCES character_types(id) ON DELETE CASCADE,
-    FOREIGN KEY (skill_id) REFERENCES skills(id) ON DELETE CASCADE
+    FOREIGN KEY (inability_id) REFERENCES inabilities(id) ON DELETE CASCADE
 );
 
 CREATE TABLE character_types_special_abilities (

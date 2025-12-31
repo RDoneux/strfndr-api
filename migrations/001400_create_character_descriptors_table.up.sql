@@ -28,10 +28,10 @@ CREATE TABLE character_descriptor_skills (
 CREATE TABLE character_descriptor_inabilities (
     id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     descriptor_id VARCHAR(36),
-    skill_id VARCHAR(36),
+    inability_id VARCHAR(36),
 
     FOREIGN KEY (descriptor_id) REFERENCES character_descriptors(id) ON DELETE CASCADE,
-    FOREIGN KEY (skill_id) REFERENCES skills(id) ON DELETE CASCADE
+    FOREIGN KEY (inability_id) REFERENCES inabilities(id) ON DELETE CASCADE
 );
 
 CREATE TABLE character_descriptor_special_abilities (

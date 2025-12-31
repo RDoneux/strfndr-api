@@ -29,10 +29,10 @@ CREATE TABLE character_foci_skills (
 CREATE TABLE character_foci_inabilities (
     id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     character_foci_id VARCHAR(36),
-    skill_id VARCHAR(36),
+    inability_id VARCHAR(36),
 
     FOREIGN KEY (character_foci_id) REFERENCES character_foci(id) ON DELETE CASCADE,
-    FOREIGN KEY (skill_id) REFERENCES skills(id) ON DELETE CASCADE
+    FOREIGN KEY (inability_id) REFERENCES inabilities(id) ON DELETE CASCADE
 );
 
 CREATE TABLE character_foci_special_abilities (

@@ -1,0 +1,5 @@
+CREATE TABLE inabilities (
+    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    name VARCHAR(100) NOT NULL,
+    description TEXT
+);
