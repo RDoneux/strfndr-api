@@ -68,14 +68,23 @@ CREATE TABLE character_pool_modifiers (
     might_current INT DEFAULT 0,
     might_max INT DEFAULT 0,
     might_edge INT DEFAULT 0,
+    might_manual_modifier INT DEFAULT 0,
+    might_edge_manual_modifier INT DEFAULT 0,
 
     speed_current INT DEFAULT 0,
     speed_max INT DEFAULT 0,
     speed_edge INT DEFAULT 0,
+    speed_manual_modifier INT DEFAULT 0,
+    speed_edge_manual_modifier INT DEFAULT 0,
 
     intellect_current INT DEFAULT 0,
     intellect_max INT DEFAULT 0,
     intellect_edge INT DEFAULT 0,
+    intellect_manual_modifier INT DEFAULT 0,
+    intellect_edge_manual_modifier INT DEFAULT 0,
+
+    armour INT DEFAULT 0,
+    armour_manual_modifier INT DEFAULT 0,
 
     FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
 );
