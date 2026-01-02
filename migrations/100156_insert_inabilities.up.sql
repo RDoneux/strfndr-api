@@ -16,4 +16,8 @@ INSERT INTO inabilities (
 (
     'Movement Tasks',
     'The difficulty of all movement-related tasks is one step higher for you.'
+),
+(
+    'Gracefulness',
+    'You are clumsy and awkward. The difficulty of all tasks requiring finesse or agility is one step higher for you.'
 );

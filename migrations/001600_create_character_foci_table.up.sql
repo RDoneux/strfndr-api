@@ -9,7 +9,7 @@ CREATE TABLE character_foci (
 CREATE TABLE character_foci_pool_modifiers (
     id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     character_foci_id VARCHAR(36),
-    pool_type ENUM('MIGHT', 'SPEED', 'INTELLECT', 'SHINS') NOT NULL,
+    pool_type ENUM('MIGHT', 'SPEED', 'INTELLECT', 'SHINS', 'ARMOUR') NOT NULL,
     modifier_value INT DEFAULT 0,
     edge_value INT DEFAULT 0,
 

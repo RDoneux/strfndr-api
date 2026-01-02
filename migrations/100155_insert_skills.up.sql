@@ -196,4 +196,36 @@ INSERT INTO skills (
     0,
     NULL,
     'PASSIVE'
-)
+),
+(
+    'Initiative',
+    'SPEED',
+    'You are skilled in initiative actions (to determine who goes first in combat).',
+    0, 
+    NULL,
+    'PASSIVE'
+),
+(
+    'Running',
+    'SPEED',
+    'You are skilled in all running-related tasks.',
+    0, 
+    NULL,
+    'PASSIVE'
+),
+(
+    'Health',
+    'MIGHT',
+    'Add 1 to the points you regain when you make a recovery roll.',
+    0, 
+    NULL,
+    'PASSIVE'
+),
+(
+    'Might Defence',
+    'MIGHT',
+    'You''re skilled at all might defence skills.',
+    0,
+    NULL,
+    'PASSIVE'
+);

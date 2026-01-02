@@ -8,7 +8,7 @@ CREATE TABLE character_descriptors (
 CREATE TABLE character_descriptor_pool_modifiers (
     id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     descriptor_id VARCHAR(36),
-    pool_type ENUM('MIGHT', 'SPEED', 'INTELLECT', 'SHINS') NOT NULL,
+    pool_type ENUM('MIGHT', 'SPEED', 'INTELLECT', 'SHINS', 'ARMOUR') NOT NULL,
     modifier_value INT DEFAULT 0,
     edge_value INT DEFAULT 0,
 

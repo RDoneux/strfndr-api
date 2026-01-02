@@ -52,6 +52,16 @@ INSERT INTO character_descriptors (
         'Strong Willed',
         'You''re touch-minded, willful, and independent. No one can talk you into anything or change your mind when you don''t want it changed. This quality doesn''t necessarily make you smart, but it does make you a bastion of willpower and resolve. You likely dress and act with unique style and flair, not caring what others think.',
         'Core Rulebook 2013'
+    ),
+    (
+        'Swift',
+        'You move quickly, able to sprint in short bursts and work with your hands with dexterity. You''re great at crossing distances quickly but not always smooothly. You are likely slim and muscular.',
+        'Core Rulebook 2013'
+    ),
+    (
+        'Tough',
+        'You''re strong and can take a lot of physical punishment. You might have a large frame and a square jaw. Tough characters frequently have visible scars.',
+        'Core Rulebook 2013'
     );
 
 INSERT INTO character_descriptor_pool_modifiers (
@@ -124,6 +134,18 @@ INSERT INTO character_descriptor_pool_modifiers (
         (SELECT id FROM character_descriptors WHERE name = 'Strong Willed'),
         'INTELLECT',
         4,
+        0
+    ),
+    (
+        (SELECT id FROM character_descriptors WHERE name = 'Swift'),
+        'SPEED',
+        4,
+        0
+    ),
+    (
+        (SELECT id FROM character_descriptors WHERE name = 'Tough'),
+        'ARMOUR',
+        1,
         0
     );
 
@@ -241,6 +263,26 @@ INSERT INTO character_descriptor_skills (
         (SELECT id FROM character_descriptors WHERE name = 'Strong Willed'),
         (SELECT id FROM skills WHERE name = 'Focus'),
         'TRAINED'
+    ),
+    (
+        (SELECT id FROM character_descriptors WHERE name = 'Swift'),
+        (SELECT id FROM skills WHERE name = 'Initiative'),
+        'TRAINED'
+    ),
+    (
+        (SELECT id FROM character_descriptors WHERE name = 'Swift'),
+        (SELECT id FROM skills WHERE name = 'Running'),
+        'TRAINED'
+    ),
+    (
+        (SELECT id FROM character_descriptors WHERE name = 'Tough'),
+        (SELECT id FROM skills WHERE name = 'Health'),
+        'TRAINED'
+    ),
+    (
+        (SELECT id FROM character_descriptors WHERE name = 'Tough'),
+        (SELECT id FROM skills WHERE name = 'Might Defence'),
+        'TRAINED'
     );
 
 INSERT INTO character_descriptor_inabilities (
@@ -274,6 +316,10 @@ INSERT INTO character_descriptor_inabilities (
     (
         (SELECT id FROM character_descriptors WHERE name = 'Strong Willed'),
         (SELECT id FROM inabilities WHERE name = 'Retaining Facts')
+    ),
+    (
+        (SELECT id FROM character_descriptors WHERE name = 'Swift'),
+        (SELECT id FROM inabilities WHERE name = 'Gracefulness')
     );
 
 INSERT INTO character_descriptor_items (
