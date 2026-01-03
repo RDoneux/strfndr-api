@@ -8,6 +8,12 @@ INSERT INTO character_types_tiers (
     1,
     'First-Tier Glaive',
     'As a first-tier Glaive, you are a novice warrior, just beginning your journey in mastering combat skills and tactics.'
+),
+(
+    (SELECT id FROM character_types WHERE name = 'Glaive'),
+    2,
+    'Second-Tier Glaive',
+    'As a second-tier Glaive, you have honed your combat skills and tactics, becoming a more formidable warrior on the battlefield.'
 );
 
 INSERT INTO character_types_tier_pool_modifiers (
@@ -72,6 +78,16 @@ INSERT INTO character_types_tier_skills (
 (
     (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 1),
     (SELECT id FROM skills WHERE name = 'Fighting Move Choice Slot'),
+    'TRAINED'
+),
+(
+    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 2),
+    (SELECT id FROM skills WHERE name = 'Fighting Move Choice Slot'),
+    'TRAINED'
+),
+(
+    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 2),
+    (SELECT id FROM skills WHERE name = 'Skill With Attacks'),
     'TRAINED'
 );
 

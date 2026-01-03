@@ -325,4 +325,52 @@ INSERT INTO skills (
     0,
     NULL,
     'ENABLER'
+),
+(
+    'Skill With Attacks',
+    'CUSTOM',
+    'Choose one type of attack in which you are not already trained: light bashing, light bladed, light ranged, medium bashing, medium blaed, medium ranged, heavy bashing, heavy bladed, or heavy ranged. You are trained in attacks using that type of weapon.',
+    0,
+    NULL,
+    'ENABLER'
+),
+(
+    'Chop',
+    'MIGHT',
+    'This is a heavy, powerful slice with a bladed weapon, probably overhand. You must grip your weapon with two hands to chop. When making this attack, you take a -1 penalty to the attack roll, and you inflict 3 additional points of damage',
+    3,
+    2,
+    'FIGHTING_MOVE'
+),
+(
+    'Crush',
+    'MIGHT',
+    'This is a powerful pummeling attack with a bashing weapon, probably overhand. You must grip your weapon with two hands to crush. (If fighting unarmed, this attack is made with both fists or both feet together.) When making this attack, you take a -1 penalty to the attack roll, and you inflict 3 additional points of damage',
+    3,
+    2,
+    'FIGHTING_MOVE'
+),
+(
+    'Reload',
+    'SPEED',
+    'When using a weapon that normally requires an action to reload, such as a heavy crossbow, you can reload and fire (or fire and reload) in the same action',
+    0,
+    1,
+    'FIGHTING_MOVE'
+),
+(
+    'Skill With Defence',
+    'CUSTOM',
+    'Choose one type of defence task in which you are not already trained: Might, Speed or Intellect. You are trained in defense tasks of that type. Unlike most fighting moves, you can select this move upto three times. Each time you select it, you must choose a different type of defence task.',
+    0,
+    NULL,
+    'FIGHTING_MOVE'
+),
+(
+    'Successive Attack',
+    'SPEED',
+    'If you take down a foe, you can immediately make another attack on that same turn against a new foe within your reach. The second attack is part of the same action. You can use this fighting move with melee atacks and ranged attacks',
+    0,
+    2,
+    'FIGHTING_MOVE'
 );
