@@ -14,6 +14,30 @@ INSERT INTO character_types_tiers (
     2,
     'Second-Tier Glaive',
     'As a second-tier Glaive, you have honed your combat skills and tactics, becoming a more formidable warrior on the battlefield.'
+),
+(
+    (SELECT id FROM character_types WHERE name = 'Glaive'),
+    3,
+    'Third-Tier Glaive',
+    'As a third-tier Glaive, you are a seasoned warrior, adept in various combat techniques and strategies, ready to face greater challenges.'
+),
+(
+    (SELECT id FROM character_types WHERE name = 'Glaive'),
+    4,
+    'Fourth-Tier Glaive',
+    'As a fourth-tier Glaive, you are a master of combat, possessing unparalleled skills and tactics that make you a formidable force on the battlefield.'
+),
+(
+    (SELECT id FROM character_types WHERE name = 'Glaive'),
+    5,
+    'Fifth-Tier Glaive',
+    'As a fifth-tier Glaive, you are a legendary warrior, whose combat prowess and tactical genius are renowned across the galaxy.'
+),
+(
+    (SELECT id FROM character_types WHERE name = 'Glaive'),
+    6,
+    'Sixth-Tier Glaive',
+    'As a sixth-tier Glaive, you are an unparalleled warrior, whose mastery of combat and strategy is unmatched, making you a living legend in the annals of galactic history.'
 );
 
 INSERT INTO character_types_tier_pool_modifiers (
@@ -88,6 +112,56 @@ INSERT INTO character_types_tier_skills (
 (
     (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 2),
     (SELECT id FROM skills WHERE name = 'Skill With Attacks'),
+    'TRAINED'
+),
+(
+    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 3),
+    (SELECT id FROM skills WHERE name = 'Expert Cypher Use'),
+    'TRAINED'
+),
+(
+    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 3),
+    (SELECT id FROM skills WHERE name = 'Skill With Attacks'),
+    'TRAINED'
+),
+(
+    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 3),
+    (SELECT id FROM skills WHERE name = 'Fighting Move Choice Slot'),
+    'TRAINED'
+),
+(
+    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 4),
+    (SELECT id FROM skills WHERE name = 'Skill With Attacks'),
+    'TRAINED'
+),
+(
+    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 4),
+    (SELECT id FROM skills WHERE name = 'Fighting Move Choice Slot'),
+    'TRAINED'
+),
+(
+    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 5),
+    (SELECT id FROM skills WHERE name = 'Adept Cypher Use'),
+    'TRAINED'
+),
+(
+    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 5),
+    (SELECT id FROM skills WHERE name = 'Skill With Attacks'),
+    'TRAINED'
+),
+(
+    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 5),
+    (SELECT id FROM skills WHERE name = 'Fighting Move Choice Slot'),
+    'TRAINED'
+),
+(
+    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 6),
+    (SELECT id FROM skills WHERE name = 'Skill With Attacks'),
+    'TRAINED'
+),
+(
+    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 6),
+    (SELECT id FROM skills WHERE name = 'Fighting Move Choice Slot'),
     'TRAINED'
 );
 
