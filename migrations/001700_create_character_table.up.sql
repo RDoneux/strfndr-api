@@ -53,16 +53,6 @@ CREATE TABLE character_inabilities (
     FOREIGN KEY (skill_id) REFERENCES skills(id) ON DELETE CASCADE
 );
 
-CREATE TABLE character_special_abilities (
-    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
-    character_id VARCHAR(36),
-    special_ability_id VARCHAR(36),
-    source ENUM('TYPE', 'DESCRIPTOR', 'FOCUS', 'CUSTOM') NOT NULL,
-
-    FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
-    FOREIGN KEY (special_ability_id) REFERENCES special_abilities(id) ON DELETE CASCADE
-);
-
 CREATE TABLE character_pool_modifiers (
     id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     character_id VARCHAR(36),
@@ -87,6 +77,8 @@ CREATE TABLE character_pool_modifiers (
 
     armour INT DEFAULT 0,
     armour_manual_modifier INT DEFAULT 0,
+
+    effort INT DEFAULT 0,
 
     FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
 );

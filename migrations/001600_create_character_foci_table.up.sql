@@ -35,15 +35,6 @@ CREATE TABLE character_foci_inabilities (
     FOREIGN KEY (inability_id) REFERENCES inabilities(id) ON DELETE CASCADE
 );
 
-CREATE TABLE character_foci_special_abilities (
-    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
-    character_foci_id VARCHAR(36),
-    special_ability_id VARCHAR(36),
-
-    FOREIGN KEY (character_foci_id) REFERENCES character_foci(id) ON DELETE CASCADE,
-    FOREIGN KEY (special_ability_id) REFERENCES special_abilities(id) ON DELETE CASCADE
-);
-
 CREATE TABLE character_foci_items (
     id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     character_foci_id VARCHAR(36),
@@ -72,13 +63,4 @@ CREATE TABLE character_foci_tier_skills (
 
     FOREIGN KEY (character_foci_tier_id) REFERENCES character_foci_tiers(id) ON DELETE CASCADE,
     FOREIGN KEY (skill_id) REFERENCES skills(id) ON DELETE CASCADE
-);
-
-CREATE TABLE character_foci_tier_special_abilities (
-    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
-    character_foci_tier_id VARCHAR(36),
-    special_ability_id VARCHAR(36),
-
-    FOREIGN KEY (character_foci_tier_id) REFERENCES character_foci_tiers(id) ON DELETE CASCADE,
-    FOREIGN KEY (special_ability_id) REFERENCES special_abilities(id) ON DELETE CASCADE
 );

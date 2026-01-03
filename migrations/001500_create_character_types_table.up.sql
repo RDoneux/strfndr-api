@@ -31,15 +31,6 @@ CREATE TABLE character_types_inabilities (
     FOREIGN KEY (inability_id) REFERENCES inabilities(id) ON DELETE CASCADE
 );
 
-CREATE TABLE character_types_special_abilities (
-    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
-    character_type_id VARCHAR(36),
-    special_ability_id VARCHAR(36),
-
-    FOREIGN KEY (character_type_id) REFERENCES character_types(id) ON DELETE CASCADE,
-    FOREIGN KEY (special_ability_id) REFERENCES special_abilities(id) ON DELETE CASCADE
-);
-
 CREATE TABLE character_types_items (
     id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     character_type_id VARCHAR(36),
@@ -70,11 +61,21 @@ CREATE TABLE character_types_tier_skills (
     FOREIGN KEY (skill_id) REFERENCES skills(id) ON DELETE CASCADE
 );
 
-CREATE TABLE character_types_tier_special_abilities (
+CREATE TABLE character_types_tier_pool_modifiers (
     id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     character_type_tier_id VARCHAR(36),
-    special_ability_id VARCHAR(36),
+    pool_type ENUM('MIGHT', 'SPEED', 'INTELLECT', 'SHINS', 'ARMOUR', 'EFFORT') NOT NULL,
+    modifier_value INT DEFAULT 0,
+    edge_value INT DEFAULT 0,
+
+    FOREIGN KEY (character_type_tier_id) REFERENCES character_types_tiers(id) ON DELETE CASCADE
+);
+
+CREATE TABLE character_types_tier_equipment (
+    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    character_type_tier_id VARCHAR(36),
+    equipment_item_id VARCHAR(36),
 
     FOREIGN KEY (character_type_tier_id) REFERENCES character_types_tiers(id) ON DELETE CASCADE,
-    FOREIGN KEY (special_ability_id) REFERENCES special_abilities(id) ON DELETE CASCADE
+    FOREIGN KEY (equipment_item_id) REFERENCES items(id) ON DELETE CASCADE
 );

@@ -5,7 +5,32 @@ INSERT INTO skills (
     attack_modifier,
     cost,
     type
-) VALUES (
+) VALUES
+(
+    'Skill Slot',
+    'CUSTOM',
+    'This is a generic skill slot that can be customized by the player.',
+    0,
+    NULL,
+    'SKILL_SLOT'
+),
+(
+    'Fighting Move Choice Slot',
+    'CUSTOM',
+    'This is a generic fighting move slot that can be customized by the player.',
+    0,
+    NULL,
+    'FIGHTING_MOVE_CHOICE_SLOT'
+),
+(
+    'Esotery Choice Slot',
+    'CUSTOM',
+    'This is a generic esotery slot that can be customized by the player.',
+    0,
+    NULL,
+    'ESOTERY_CHOICE_SLOT'
+),
+(
     'Astronomy',
     'INTELLECT',
     'The skill of studying stars, planets, and other celestial phenomena. Used for navigation and understanding cosmic events.',
@@ -228,4 +253,76 @@ INSERT INTO skills (
     0,
     NULL,
     'PASSIVE'
+),
+(
+    'Bash',
+    'MIGHT',
+    'This is a pummeling melee attack. Your attack inflicts 1 less point of damage than normal, but dazes your target for one round, during which time the difficulty of all tasks it performs is modified by one step to its detriment.',
+    -1,
+    1,
+    'FIGHTING_MOVE'
+),
+(
+    'No Need for Weapons',
+    'CUSTOM',
+    'When you make an unarmed attack (such as a punch or kick), it counts as a medium weapon instead of a light weapon.',
+    0,
+    NULL,
+    'FIGHTING_MOVE'
+),
+(
+    'Pierce',
+    'SPEED',
+    'This is a well-aimed, penetrating ranged attack. You make an attack and inflict 1 additional point of damage if your weapon has a sharp point',
+    1,
+    1,
+    'FIGHTING_MOVE'
+),
+(
+    'Thrust',
+    'MIGHT',
+    'This is a powerful melee stab. You make an attack and inflict 1 additional point of damage if your weapon has a sharp edge or point.',
+    1,
+    1,
+    'FIGHTING_MOVE'
+),
+(
+    'Trained Without Armour',
+    'CUSTOM',
+    'You are trained in Speed defense actions when not wearing armour.',
+    0,
+    NULL,
+    'FIGHTING_MOVE'
+),
+(
+    'No Need for Weapons',
+    'SPECIAL_ABILITY',
+    'When you make an unarmed attack (such as a punch or kick), it counts as a medium weapon instead of a light weapon.',
+    0,
+    NULL,
+    'ENABLER'
+),
+(
+    'Cypher Use',
+    'SPECIAL_ABILITY',
+    'You can bear two cyphers at a time.',
+    0,
+    NULL,
+    'ENABLER'
+),
+(
+    'Practiced in Armour',
+    'SPECIAL_ABILITY',
+    'You can wear armour for long period of time without tiring and can compensate for slowed reactions from wearing armour. You can wear any kind of armour. You reduce the Might cost per hour for wearing armour and the Speed Pool reduction for wearing armour by 2.',
+    0,
+    NULL,
+    'ENABLER'
+),
+(
+    'Practiced With All Weapons',
+    'SPECIAL_ABILITY',
+    'You can use any weapon',
+    0,
+    NULL,
+    'ENABLER'
 );

@@ -34,15 +34,6 @@ CREATE TABLE character_descriptor_inabilities (
     FOREIGN KEY (inability_id) REFERENCES inabilities(id) ON DELETE CASCADE
 );
 
-CREATE TABLE character_descriptor_special_abilities (
-    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
-    descriptor_id VARCHAR(36),
-    special_ability_id VARCHAR(36),
-
-    FOREIGN KEY (descriptor_id) REFERENCES character_descriptors(id) ON DELETE CASCADE,
-    FOREIGN KEY (special_ability_id) REFERENCES special_abilities(id) ON DELETE CASCADE
-);
-
 CREATE TABLE character_descriptor_items (
     id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     descriptor_id VARCHAR(36),

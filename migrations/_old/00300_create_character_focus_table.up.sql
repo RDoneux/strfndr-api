@@ -7,13 +7,13 @@ CREATE TABLE IF NOT EXISTS character_focus (
     special_effect TEXT
 );
 
-CREATE TABLE IF NOT EXISTS character_focus_tier_classifications (
-    id CHAR(36) PRIMARY KEY DEFAULT(UUID()),
-    focus_id CHAR(36) NOT NULL,
-    special_ability_id CHAR(36),
-    FOREIGN KEY (focus_id) REFERENCES character_focus (id) ON DELETE CASCADE,
-    FOREIGN KEY (special_ability_id) REFERENCES special_abilities (id) ON DELETE SET NULL
-);
+-- CREATE TABLE IF NOT EXISTS character_focus_tier_classifications (
+--     id CHAR(36) PRIMARY KEY DEFAULT(UUID()),
+--     focus_id CHAR(36) NOT NULL,
+--     special_ability_id CHAR(36),
+--     FOREIGN KEY (focus_id) REFERENCES character_focus (id) ON DELETE CASCADE,
+--     FOREIGN KEY (special_ability_id) REFERENCES special_abilities (id) ON DELETE SET NULL
+-- );
 
 CREATE TABLE IF NOT EXISTS character_focus_pool_modifiers (
     id CHAR(36) PRIMARY KEY DEFAULT(UUID()),
