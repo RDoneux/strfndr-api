@@ -1079,7 +1079,7 @@
             <mxRectangle height="30" width="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="fF6qmj68S0drOs7CzQSl-303" parent="fF6qmj68S0drOs7CzQSl-301" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" value="item_type ENUM(&#39;CYPHER&#39;, &#39;ARTIFACT&#39;, &#39;EQUIPMENT&#39;, &#39;ODDITY&#39;, &#39;WEAPON&#39;, &#39;AMMUNITION&#39; &#39;ARMOUR&#39;)" vertex="1">
+        <mxCell id="fF6qmj68S0drOs7CzQSl-303" parent="fF6qmj68S0drOs7CzQSl-301" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" value="item_type ENUM(&#39;CYPHER&#39;, &#39;ARTIFACT&#39;, &#39;EQUIPMENT&#39;, &#39;ODDITY&#39;, &#39;WEAPON&#39;, &#39;WEAPON_SLOT&#39;, &#39;AMMUNITION&#39; &#39;ARMOUR&#39;)" vertex="1">
           <mxGeometry height="30" width="540" x="30" as="geometry">
             <mxRectangle height="30" width="540" as="alternateBounds" />
           </mxGeometry>

@@ -5,7 +5,15 @@ INSERT INTO items (
     price,
     item_type,
     equip_location
-) VALUES 
+) VALUES
+    (
+        'Light Weapon Slot',
+        'A slot for a light weapon such as a dagger, short sword, or light mace for the player to equip.' ,
+        0,
+        0,
+        'WEAPON_SLOT',
+        'NONE'
+    ),
     (
         'Backpack',
         'A sturdy pack for carrying gear. Can hold up to 30 lbs of items.',
@@ -226,7 +234,10 @@ INSERT INTO items (
 INSERT INTO equipment (
     item_id
 ) 
-VALUES 
+VALUES
+    (
+        (SELECT id FROM items WHERE name = 'Light Weapon Slot')
+    ),
     (
         (SELECT id FROM items WHERE name = 'Backpack')
     ),

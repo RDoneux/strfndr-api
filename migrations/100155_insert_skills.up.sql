@@ -609,4 +609,58 @@ INSERT INTO skills (
     0,
     5,
     'FIGHTING_MOVE'
+),
+(
+    'Practiced With Light Weapons',
+    'SPECIAL_ABILITY',
+    'You can use light weapons without penalty. If you wield a medium weapon, increases the difficulty of the attack by one step. If you wield a heavy weapon, increase it by two steps.',
+    0,
+    0,
+    0,
+    'PASSIVE'
+),
+(
+    'Numenera Training',
+    'SPECIAL_ABILITY',
+    'You are trained in the numenera and can attempt to understand and identify its properties.',
+    0,
+    0,
+    0,
+    'PASSIVE'
+),
+(
+    'Onslaught',
+    'INTELLECT',
+    'You attack a foe using energies that asail either their physical form of their mind. In either case, you must be able to see your target. If the attack if physical, you emit a short-range ray of force that inflicts 4 points of damage. If the attack is mental, you focus your mental energy to blast the thought processes of another creature within short range. This mindslice inflicts 2 points of Intellect damage (and thus ignores Armour). Some creature swithout minds (such as automatons) might be immmune to mindslice.',
+    4,
+    0,
+    1,
+    'ESOTERY'
+),
+(
+    'Push',
+    'INTELLECT',
+    'You push a creature or object an immediate distance in any direction you wish. You must be able to see the target, which must be your size or smaller, must not be afixed to anything, and must be within short range. The push is quick, and the force is too crude to be manipulated. For example, you can''t use this esotery to pull a lever or even close a door.',
+    0,
+    0,
+    2,
+    'ESOTERY'
+),
+(
+    'Scan',
+    'INTELLECT',
+    'You scan an area equal in size to a 3 meter cube, including all objects or creatures within that area. The area must be within short range. Scanning a creature or object always reveals its level (a measure of how powervul, dangerous, or difficult it is.) You also learn whatever facts the GM feels are pertinent about the matter and energy in that area. For example, you might learn that the wooden bo contains a device of metal and synth. You might learn that the glass cylinder is full of poisonous gas, and that its metal stand has an electrical field running trhrough it that connects to a metal mesh in the floor. You might learn that the creature standing before you is a mammal with a small brain. However, this esotery doesn''t tell you wat the information means. Thus in the first example, you don''t know what the metal and synth device does. In the third, you might suspect that the creature is not very intelligent, but scans, like looks can be deceiving. Many materials and energy fieldfs prevent or resist scanning.',
+    0,
+    0,
+    2,
+    'ESOTERY'
+),
+(
+    'Ward',
+    'CUSTOM',
+    'You have a shield of energy around you at all ties that helps deflect attacks. You gain +1 to Armour.',
+    0,
+    1,
+    0,
+    'PASSIVE'
 );

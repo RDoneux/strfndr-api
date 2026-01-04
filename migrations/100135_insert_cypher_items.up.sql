@@ -5,6 +5,12 @@ INSERT INTO items (
     equip_location
 ) VALUES 
     (
+        'Cypher Slot',
+        'A slot for a cypher to be equipped.',
+        'CYPHER_SLOT',
+        'NONE'
+    ),
+    (
         'Adhesion Clamps',
         'Handles with powerful suction cups.',
         'CYPHER',
