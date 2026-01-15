@@ -35,6 +35,15 @@ INSERT INTO skills (
     'ESOTERY_CHOICE_SLOT'
 ),
 (
+    'Trick of the Trade Slot',
+    'CUSTOM',
+    'This is a generic trick of the trade slot that can be customized by the player.',
+    0,
+    0,
+    0,
+    'TRICK_OF_THE_TRADE_SLOT'
+),
+(
     'Astronomy',
     'INTELLECT',
     'The skill of studying stars, planets, and other celestial phenomena. Used for navigation and understanding cosmic events.',
@@ -879,4 +888,67 @@ INSERT INTO skills (
     0,
     0,
     'ESOTERY'
+),
+(
+    'Practiced With Medium Weapons',
+    'SPECIAL_ABILITY',
+    'You can use medium weapons without penalty. If you wield a heavy weapon, increase the difficulty of the attack by one step.',
+    0,
+    0,
+    0,
+    'PASSIVE'
+),
+(
+    'Brute Finesse',
+    'SPECIAL_ABILITY',
+    'Sometimes a swift kick is just the trick to pooping open a lock or starting a reluctant piece of machinery. When you apply Effort to a noncombat Speed task, you can spend points from your Might Pool as if they came from your Speed Pool. For example, you could spend 3 Might points and 2 Speed points to apply two levels of Effort to picking a lock.',
+    0,
+    0,
+    0,
+    'PASSIVE'
+),
+(
+    'Experienced Adventurer',
+    'SPECIAL_ABILITY',
+    'When you use a noncombat skill successfully, if you didn''t roll a natural 19 or 20, you can apply a level of Effort (after the roll) to get a minor special effect. The stat points spent for this level of Effort must come from the same stat as the one used for the skill. Thus, if you made a Speed roll, the cost of the Effort comes from your Speed Pool. Applying the Effort doesn''t modify the difficulty of the task, only creates the minor effect.',
+    0,
+    0,
+    0,
+    'PASSIVE'
+),
+(
+    'Enhancement',
+    'INTELLECT',
+    'You gain a +1 bonus to the Edge for one stat of your choice (Might, Speed, or Intellect) for ten minutes. You can have only one version of this trick in effect at a time. Action to initiate.',
+    0,
+    0,
+    4,
+    'TRICK_OF_THE_TRADE'
+),
+(
+    'Analytical Combat',
+    'SPECIAL_ABILITY',
+    'Sometimes the most important muscle in a fight is your brain. If you can predict where an opponent will move next or see her weak spot, you can be a more successful combatant. When you apply Effort to a combat Might task or Speed task, you can also spend points from your Intellect Pool as if they came from your Might Pool or Speed Pool. For example, you could spend 3 intellect points and 2 might points to apply two levels of Effort to attacking with a sword. Enabler',
+    0,
+    0,
+    0,
+    'PASSIVE'
+),
+(
+    'Transdimensional Weapon',
+    'INTELLECT',
+    'One melee weapon that you touch vibrates on a dimensional frequency so that it spans into other dimensions for one hour. During that time, it inflicts 1 additional point of damage on a successful hit and affects targets that can only be affected by special transdimensional effects such as those that are out of phase. Action to initiate.',
+    1,
+    0,
+    3,
+    'TRICK_OF_THE_TRADE'
+),
+(
+    'Energy Protection',
+    'INTELLECT',
+    'Choose a descrete type of energy that you have experience with (such as heat, sonic, electricity, and so on). You gain +10 to armour against damage from that type of energy for 10 minutes. Alternatively, you gain +1 to Armour against damage from that energy for 28 hours. You mustbe familiar with the type of energy; for example, if you have no experience with a certian kind of extrademensional energy, you can''t protect against it. Instead of applying Effort to decrease the difficulty of this esotery, you can apply Effort to protect more targets, with each level of Effort affecting up to two additional targets. You must touch additional targets to protect them.',
+    0,
+    0,
+    4,
+    'TRICK_OF_THE_TRADE'
 );

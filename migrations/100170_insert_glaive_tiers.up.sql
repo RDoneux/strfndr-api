@@ -53,18 +53,6 @@ INSERT INTO character_types_tier_pool_modifiers (
 ),
 (
     (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 1),
-    'MIGHT',
-    0,
-    1
-),
-(
-    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 1),
-    'SPEED',
-    0,
-    1
-),
-(
-    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Glaive' AND ctt.tier = 1),
     'SHINS',
     5,
     0

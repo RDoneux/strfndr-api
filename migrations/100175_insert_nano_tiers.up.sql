@@ -53,24 +53,6 @@ INSERT INTO character_types_tier_pool_modifiers (
 ),
 (
     (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Nano' AND ctt.tier = 1),
-    'INTELLECT',
-    12,
-    1
-),
-(
-    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Nano' AND ctt.tier = 2),
-    'MIGHT',
-    7,
-    0
-),
-(
-    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Nano' AND ctt.tier = 2),
-    'SPEED',
-    9,
-    0
-),
-(
-    (SELECT ctt.id FROM character_types_tiers ctt JOIN character_types ct ON ctt.character_type_id = ct.id WHERE ct.name = 'Nano' AND ctt.tier = 2),
     'SHINS',
     4,
     0

@@ -7,6 +7,13 @@ INSERT INTO items (
 )
 VALUES 
     (
+        'Light Armour Slot',
+        'A slot for equipping light armour pieces.',
+        0,
+        'ARMOUR_SLOT',
+        'TORSO'
+    ),
+    (
         'Leather jerkin',
         'A simple leather vest reinforced with metal studs or plates. Provides basic protection without restricting movement.',
         3,

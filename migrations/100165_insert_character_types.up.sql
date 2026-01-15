@@ -56,7 +56,7 @@ INSERT INTO character_types_pool_modifiers (
 (
     (SELECT id FROM character_types WHERE name = 'Nano'),
     'INTELLECT',
-    10,
+    12,
     0
 ),
 (
