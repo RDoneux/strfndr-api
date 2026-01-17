@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Numemera",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

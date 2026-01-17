@@ -1,8 +1,11 @@
 package main
 
 import (
-	"github.com/rdoneux/nmna-api/services"
+	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
+	"github.com/rdoneux/nmna-api/services"
+
+	"github.com/rdoneux/nmna-api/controllers"
 )
 
 func main() {
@@ -15,14 +18,29 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	defer database.Close()
 
-	
 	err = services.RunMigrations()
 	if err != nil {
 		panic(err)
 	}
 
-	// services.RollbackMigrations();
+	app := fiber.New()
+
+	utilsController := &controllers.UtilsController{
+		DB: database,
+	}
+
+	usersController := &controllers.UsersController{
+		DB: database,
+	}
+
+	// utils
+	app.Get("/health", utilsController.GetHealth)
+
+	// users
+	app.Get("/users", usersController.GetUsers)
+	app.Post("/users", usersController.CreateUser)
+
+	app.Listen(":3000");
 
 }

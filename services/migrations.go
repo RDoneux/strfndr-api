@@ -74,7 +74,7 @@ func runMigrations(direction string, path string) error {
             println("Error:", err.Error())
             return err
         }
-        defer migration.Close()
+        // defer migration.Close()
 
         switch direction {
         case "up":

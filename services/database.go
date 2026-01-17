@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"github.com/rdoneux/nmna-api/config"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gofiber/fiber/v2"
+	
+	"github.com/rdoneux/nmna-api/errors"
 )
 
 func ConnectDatabase() (*sql.DB, error) {
@@ -30,4 +33,12 @@ func ConnectDatabase() (*sql.DB, error) {
 	fmt.Println("Database connection established")
 	return db, nil
 
+}
+
+func GetDb(ctx *fiber.Ctx) (*sql.DB, error) {
+	db, ok := ctx.Locals("db").(*sql.DB)
+	if !ok || db == nil {
+		return nil, errors.DatabaseNotOnContextObject
+	}
+	return db, nil
 }
