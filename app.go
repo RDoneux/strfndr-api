@@ -1,7 +1,9 @@
 package main
 
 import (
+	"os"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/jwt/v3"
 	"github.com/joho/godotenv"
 	"github.com/rdoneux/nmna-api/services"
 
@@ -26,6 +28,14 @@ func main() {
 
 	app := fiber.New()
 
+	var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
+	app.Use("/protected", jwtware.New(jwtware.Config{
+		SigningKey: jwtSecret,
+		ContextKey: "user",
+		TokenLookup: "header:Authorization",
+		AuthScheme: "Bearer",
+	}))
+
 	utilsController := &controllers.UtilsController{
 		DB: database,
 	}
@@ -38,7 +48,7 @@ func main() {
 	app.Get("/health", utilsController.GetHealth)
 
 	// users
-	app.Get("/users", usersController.GetUsers)
+	app.Get("/protected/users", usersController.GetUsers)
 	app.Post("/users", usersController.CreateUser)
 
 	app.Listen(":3000");

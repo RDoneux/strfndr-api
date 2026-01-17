@@ -49,6 +49,7 @@ func (usersController *UsersController) CreateUser(ctx *fiber.Ctx) error {
 		return fiber.ErrNotAcceptable
 	}
 
+	// encrypt password to be saved
 	encryptedPassword, err := services.Encrypt(password)
 	if err != nil {
 		return fiber.ErrInternalServerError
@@ -85,21 +86,15 @@ func (usersController *UsersController) CreateUser(ctx *fiber.Ctx) error {
 		return err
 	}
 
-	// Build select query
-	query, args, err = squirrel.
-		Select("display_name", "username").
-		From("users").
-		Where("username = ?", user.Username).
-		ToSql()
+	// get tokens
+	accessToken, refreshToken, err := services.GenerateJWT(user.Username)
 	if err != nil {
 		return err
 	}
 
-	// Execute insert query
-	row := usersController.DB.QueryRow(query, args...)
-	if err := row.Scan(&user.DisplayName, &user.Username); err != nil {
-		return err
-	}
+	return ctx.Status(200).JSON(fiber.Map{
+		"accessToken":  accessToken,
+		"refreshToken": refreshToken,
+	})
 
-	return ctx.Status(200).JSON(fiber.Map{"insertedUser": user.ToPublic()})
 }
