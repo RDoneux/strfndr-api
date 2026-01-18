@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"database/sql"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/Masterminds/squirrel"
@@ -27,9 +28,19 @@ const (
 
 func GenerateJWT(username string) (accessToken, refreshToken string, err error) {
 	var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
+
+	accessTokenExpMinutes, err := strconv.Atoi(os.Getenv("ACCESS_TOKEN_EXP_MINUTES"))
+	if err != nil {
+		accessTokenExpMinutes = 15 // fallback default
+	}
+	refreshTokenExpHours, err := strconv.Atoi(os.Getenv("REFRESH_TOKEN_EXP_HOURS"))
+	if err != nil {
+		refreshTokenExpHours = 24 // fallback default
+	}
+
 	accessClaims := jwt.MapClaims{
 		"username": username,
-		"exp":      time.Now().Add(15 * time.Minute).Unix(),
+		"exp":      time.Now().Add(time.Duration(accessTokenExpMinutes) * time.Minute).Unix(),
 		"type":     TOKEN_TYPE_ACCESS,
 	}
 	access := jwt.NewWithClaims(jwt.SigningMethodHS256, accessClaims)
@@ -40,7 +51,7 @@ func GenerateJWT(username string) (accessToken, refreshToken string, err error) 
 
 	refreshClaims := jwt.MapClaims{
 		"username": username,
-		"exp":      time.Now().Add(time.Hour * 24).Unix(),
+		"exp":      time.Now().Add(time.Duration(refreshTokenExpHours) * time.Hour).Unix(),
 		"type":     TOKEN_TYPE_REFRESH,
 	}
 	refresh := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshClaims)
