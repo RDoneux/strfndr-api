@@ -48,6 +48,10 @@ func main() {
 		DB: database,
 	}
 
+	characterController := &controllers.CharacterController{
+		DB: database,
+	}
+
 	// utils
 	app.Get("/health", utilsController.GetHealth)
 
@@ -62,6 +66,9 @@ func main() {
 	app.Post("/users", usersController.CreateUser)
 	app.Put("/protected/users/:id", usersController.UpdateUser)
 	app.Delete("/protected/users/:id", usersController.DeleteUser)
+
+	// characters
+	app.Post("/protected/characters", characterController.CreateCharacter)
 
 	app.Listen(":3000");
 

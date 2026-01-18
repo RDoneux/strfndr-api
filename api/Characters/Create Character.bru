@@ -1,0 +1,23 @@
+meta {
+  name: Create Character
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/protected/characters
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Test Character from API",
+    "userId": "7cf02857-f4a9-11f0-944c-be35d3ff38a0"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
