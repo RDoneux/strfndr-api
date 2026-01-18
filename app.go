@@ -58,6 +58,7 @@ func main() {
 	// users
 	app.Get("/protected/users", usersController.GetUsers)
 	app.Post("/users", usersController.CreateUser)
+	app.Put("/users/:id", usersController.UpdateUser)
 
 	app.Listen(":3000");
 

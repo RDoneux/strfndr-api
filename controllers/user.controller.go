@@ -17,7 +17,9 @@ type UsersController struct {
 func (usersController *UsersController) GetUsers(ctx *fiber.Ctx) error {
 
 	// Build query
-	query, args, err := squirrel.Select("display_name", "username").From("users").ToSql()
+	query, args, err := squirrel.
+		Select("id", "display_name", "username").
+		From("users").ToSql()
 	if err != nil {
 		return err
 	}
@@ -32,13 +34,13 @@ func (usersController *UsersController) GetUsers(ctx *fiber.Ctx) error {
 	var users []models.PublicUser = make([]models.PublicUser, 0)
 	for rows.Next() {
 		var user models.PublicUser
-		if err := rows.Scan(&user.DisplayName, &user.Username); err != nil {
+		if err := rows.Scan(&user.ID, &user.DisplayName, &user.Username); err != nil {
 			return err
 		}
 		users = append(users, user)
 	}
 
-	return ctx.Status(200).JSON(fiber.Map{"users": users})
+	return ctx.Status(200).JSON(users)
 }
 
 func (usersController *UsersController) CreateUser(ctx *fiber.Ctx) error {
@@ -98,6 +100,68 @@ func (usersController *UsersController) CreateUser(ctx *fiber.Ctx) error {
 
 	return ctx.Status(200).JSON(fiber.Map{
 		"accessToken":  accessToken,
+		"refreshToken": refreshToken,
+	})
+
+}
+
+func (usersController *UsersController) UpdateUser(ctx *fiber.Ctx) error {
+
+	// get path param
+	userId := ctx.Params("id")
+
+	// get request body
+	var user models.User
+	if err := ctx.BodyParser(&user); err != nil {
+		return err
+	}
+
+	// hash password
+	hashedPassword, err := services.Encrypt(user.Password)
+	if err != nil {
+		return err
+	}
+
+	// update user in db
+	query, args, err := squirrel.
+		Update("users").
+		Set("display_name", user.DisplayName).
+		Set("username", user.Username).
+		Set("password_hash", hashedPassword).
+		Where("id = ?", userId).
+		ToSql()
+	_, err = usersController.DB.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	// fetch updated user from db
+	query, args, err = squirrel.
+		Select("id", "display_name", "username").
+		From("users").
+		Where("id = ?", userId).
+		ToSql()
+
+	var updatedUser models.PublicUser
+	err = usersController.DB.
+		QueryRow(query, args...).
+		Scan(&updatedUser.ID, &updatedUser.DisplayName, &updatedUser.Username)
+	if err != nil {
+		return err
+	}
+
+	// generate new tokens
+	authToken, refreshToken, err := services.GenerateJWT(updatedUser.Username)
+	if err != nil {
+		return err
+	}
+
+	// update password hash
+	err = services.UpdateRefreshTokenHashForUser(refreshToken, updatedUser.Username, usersController.DB)
+
+	// return tokens to user
+	return ctx.Status(200).JSON(fiber.Map{
+		"authToken": authToken,
 		"refreshToken": refreshToken,
 	})
 

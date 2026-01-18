@@ -1,12 +1,14 @@
 package models
 
 type User struct {
+	ID          string `json:"id"`
 	DisplayName string `json:"displayName"`
 	Username    string `json:"username"`
 	Password    string `json:"password"`
 }
 
 type PublicUser struct {
+	ID          string `json:"id"`
 	DisplayName string `json:"displayName"`
 	Username    string `json:"username"`
 }

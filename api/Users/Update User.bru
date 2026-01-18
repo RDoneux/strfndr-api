@@ -1,0 +1,30 @@
+meta {
+  name: Update User
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{host}}/users/edb1cf7b-f49c-11f0-944c-be35d3ff38a0
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "displayName": "Updated Display Name",
+    "username": "updateddd@username.com",
+    "password": "new-password"
+  }
+}
+
+tests {
+  const json = res.getBody();
+  bru.setEnvVar("accessToken", json.accessToken);
+  bru.setEnvVar("refreshToken", json.refreshToken);
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
