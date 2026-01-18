@@ -53,6 +53,7 @@ func main() {
 
 	// authorisation
 	app.Get("/refresh", authController.RefreshToken)
+	app.Get("/login", authController.SignIn)
 
 	// users
 	app.Get("/protected/users", usersController.GetUsers)

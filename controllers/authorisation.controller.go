@@ -80,3 +80,53 @@ func (securityController *AuthorisationController) RefreshToken(ctx *fiber.Ctx) 
 		"refreshToken": refreshToken,
 	})
 }
+
+func (securityController *AuthorisationController) SignIn(ctx *fiber.Ctx) error {
+
+	// get basic auth
+	username, password, ok := services.GetBasicAuth(ctx)
+	if ok != true {
+		return fiber.ErrNotAcceptable
+	}
+
+	// find matching user in db
+	query, args, err := squirrel.
+		Select("username", "password_hash").
+		From("users").
+		Where("username = ?", username).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	var dbUsername string
+	var dbPasswordHash string
+	getUserError := securityController.DB.QueryRow(query, args...).Scan(&dbUsername, &dbPasswordHash)
+	if getUserError != nil {
+		return getUserError
+	}
+	if dbUsername == "" || dbPasswordHash == "" {
+		return fiber.ErrForbidden
+	}
+
+	// compare password
+	if err := bcrypt.CompareHashAndPassword([]byte(dbPasswordHash), []byte(password)); err != nil {
+		return err
+	}
+
+	// generate tokens
+	accessToken, refreshToken, err := services.GenerateJWT(dbUsername)
+	if err != nil {
+		return err
+	}
+
+	// update refresh token hash
+	services.UpdateRefreshTokenHashForUser(refreshToken, dbUsername, securityController.DB)
+
+	// return tokens to user
+	return ctx.Status(200).JSON(fiber.Map{
+		"accessToken":  accessToken,
+		"refreshToken": refreshToken,
+	})
+
+}
