@@ -43,6 +43,32 @@ func (usersController *UsersController) GetUsers(ctx *fiber.Ctx) error {
 	return ctx.Status(200).JSON(users)
 }
 
+func (usersController *UsersController) GetUserById(ctx *fiber.Ctx) error {
+
+	// get id from path param
+	userId := ctx.Params("id")
+
+	// get user from db
+	query, args, err := squirrel.
+		Select("id", "display_name", "username").
+		From("users").
+		Where("id = ?", userId).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	var foundUser models.PublicUser
+	err = usersController.DB.QueryRow(query, args...).Scan(&foundUser.ID, &foundUser.DisplayName, &foundUser.Username)
+	if err != nil {
+		return err
+	}
+
+	// return user info
+	return ctx.Status(200).JSON(foundUser)
+
+}
+
 func (usersController *UsersController) CreateUser(ctx *fiber.Ctx) error {
 
 	// get username and password from basic auth

@@ -1,0 +1,16 @@
+meta {
+  name: Get User by ID
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{host}}/protected/users/059ecf5f-f49d-11f0-944c-be35d3ff38a0
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
