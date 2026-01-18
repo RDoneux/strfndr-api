@@ -11,12 +11,14 @@ CREATE TABLE characters (
     character_type_id VARCHAR(36),
     character_descriptor_id VARCHAR(36),
     character_focus_id VARCHAR(36),
+    user_id VARCHAR(36),
 
     shins INT NOT NULL DEFAULT 0,
 
-    FOREIGN KEY (character_type_id) REFERENCES character_types(id) ON DELETE SET NULL,
-    FOREIGN KEY (character_descriptor_id) REFERENCES character_descriptors(id) ON DELETE SET NULL,
-    FOREIGN KEY (character_focus_id) REFERENCES character_foci(id) ON DELETE SET NULL
+    FOREIGN KEY (character_type_id) REFERENCES character_types(id) ON DELETE CASCADE,
+    FOREIGN KEY (character_descriptor_id) REFERENCES character_descriptors(id) ON DELETE CASCADE,
+    FOREIGN KEY (character_focus_id) REFERENCES character_foci(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE character_items (

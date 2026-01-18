@@ -40,7 +40,7 @@ func (usersController *UsersController) GetUsers(ctx *fiber.Ctx) error {
 		users = append(users, user)
 	}
 
-	return ctx.Status(200).JSON(users)
+	return ctx.Status(fiber.StatusOK).JSON(users)
 }
 
 func (usersController *UsersController) GetUserById(ctx *fiber.Ctx) error {
@@ -60,12 +60,47 @@ func (usersController *UsersController) GetUserById(ctx *fiber.Ctx) error {
 
 	var foundUser models.PublicUser
 	err = usersController.DB.QueryRow(query, args...).Scan(&foundUser.ID, &foundUser.DisplayName, &foundUser.Username)
+	if err == sql.ErrNoRows {
+		return ctx.Status(fiber.StatusNotFound).SendString("User not found")
+	}
 	if err != nil {
 		return err
 	}
 
 	// return user info
-	return ctx.Status(200).JSON(foundUser)
+	return ctx.Status(fiber.StatusOK).JSON(foundUser)
+
+}
+
+func (usersController *UsersController) GetUserByUsername(ctx *fiber.Ctx) error {
+
+	// get username from query params
+	username := ctx.Query("username")
+	if username == "" {
+		return ctx.Status(fiber.StatusBadRequest).SendString("Missing username")
+	}
+
+	// select user from db
+	query, args, err := squirrel.
+		Select("id", "display_name", "username").
+		From("users").
+		Where("username = ?", username).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	var user models.PublicUser
+	err = usersController.DB.QueryRow(query, args...).Scan(&user.ID, &user.DisplayName, &user.Username)
+	if err == sql.ErrNoRows {
+		return ctx.Status(fiber.StatusNotFound).SendString("User not found")
+	}
+	if err != nil {
+		return err
+	}
+
+	// return user to user
+	return ctx.Status(fiber.StatusOK).JSON(user);
 
 }
 
@@ -124,7 +159,7 @@ func (usersController *UsersController) CreateUser(ctx *fiber.Ctx) error {
 		return err
 	}
 
-	return ctx.Status(200).JSON(fiber.Map{
+	return ctx.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"accessToken":  accessToken,
 		"refreshToken": refreshToken,
 	})
@@ -186,9 +221,29 @@ func (usersController *UsersController) UpdateUser(ctx *fiber.Ctx) error {
 	err = services.UpdateRefreshTokenHashForUser(refreshToken, updatedUser.Username, usersController.DB)
 
 	// return tokens to user
-	return ctx.Status(200).JSON(fiber.Map{
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
 		"authToken": authToken,
 		"refreshToken": refreshToken,
 	})
+
+}
+
+func (usersController *UsersController) DeleteUser(ctx *fiber.Ctx) error {
+
+	// get id from params
+	userId := ctx.Params("id")
+
+	// remove user from db
+	query, args, err := squirrel.
+		Delete("users").
+		Where("id = ?", userId).
+		ToSql()
+	if err != nil {
+		return err
+	}
+	_, err = usersController.DB.Exec(query, args...)
+
+	// return status code 
+	return ctx.Status(fiber.StatusNoContent).Send(nil);
 
 }

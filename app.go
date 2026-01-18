@@ -57,9 +57,11 @@ func main() {
 
 	// users
 	app.Get("/protected/users", usersController.GetUsers)
-	app.Get("/protected/users/:id", usersController.GetUserById)
+	app.Get("/protected/user/:id", usersController.GetUserById)
+	app.Get("/protected/user", usersController.GetUserByUsername)
 	app.Post("/users", usersController.CreateUser)
-	app.Put("protected/users/:id", usersController.UpdateUser)
+	app.Put("/protected/users/:id", usersController.UpdateUser)
+	app.Delete("/protected/users/:id", usersController.DeleteUser)
 
 	app.Listen(":3000");
 

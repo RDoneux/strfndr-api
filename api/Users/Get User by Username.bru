@@ -1,0 +1,20 @@
+meta {
+  name: Get User by Username
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{host}}/protected/user?username=test@username.com
+  body: none
+  auth: inherit
+}
+
+params:query {
+  username: test@username.com
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
