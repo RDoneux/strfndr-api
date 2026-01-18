@@ -40,12 +40,19 @@ func main() {
 		DB: database,
 	}
 
+	authController := &controllers.AuthorisationController{
+		DB: database,
+	}
+
 	usersController := &controllers.UsersController{
 		DB: database,
 	}
 
 	// utils
 	app.Get("/health", utilsController.GetHealth)
+
+	// authorisation
+	app.Get("/refresh", authController.RefreshToken)
 
 	// users
 	app.Get("/protected/users", usersController.GetUsers)

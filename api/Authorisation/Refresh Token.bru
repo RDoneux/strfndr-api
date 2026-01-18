@@ -1,0 +1,26 @@
+meta {
+  name: Refresh Token
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/refresh
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{refreshToken}}
+}
+
+tests {
+  const json = res.getBody();
+  bru.setEnvVar("accessToken", json.accessToken);
+  bru.setEnvVar("refreshToken", json.refreshToken);
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -70,11 +70,21 @@ func (usersController *UsersController) CreateUser(ctx *fiber.Ctx) error {
 		Password:    encryptedPassword,
 	}
 
+	// generate tokens
+	accessToken, refreshToken, err := services.GenerateJWT(user.Username)
+	if err != nil {
+		return err
+	}
+	hashedRefreshToken, err := services.HashTokenForStorage(refreshToken)
+	if err != nil {
+		return err
+	}
+
 	// Build insert query
 	query, args, err := squirrel.
 		Insert("users").
-		Columns("display_name", "username", "password").
-		Values(user.DisplayName, user.Username, user.Password).
+		Columns("display_name", "username", "password_hash", "refresh_token_hash").
+		Values(user.DisplayName, user.Username, user.Password, hashedRefreshToken).
 		ToSql()
 	if err != nil {
 		return err
@@ -82,12 +92,6 @@ func (usersController *UsersController) CreateUser(ctx *fiber.Ctx) error {
 
 	// Execute insert query
 	_, err = usersController.DB.Exec(query, args...)
-	if err != nil {
-		return err
-	}
-
-	// get tokens
-	accessToken, refreshToken, err := services.GenerateJWT(user.Username)
 	if err != nil {
 		return err
 	}
