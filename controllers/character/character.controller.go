@@ -151,6 +151,35 @@ func (characterController *CharacterController) GetCharactersByUserId(ctx *fiber
 
 }
 
+func (characterController *CharacterController) AddCharacterSkill(ctx *fiber.Ctx) error {
+
+	// get skill id from body
+	db := characterController.DB
+	var params struct {
+		SkillID     string `json:"skillId"`
+		CharacterId string `json:"characterId"`
+	}
+	if err := ctx.BodyParser(&params); err != nil {
+		return err
+	}
+
+	// construct insert statement
+	err := InsertCharacterSkill(*db, params.CharacterId, params.SkillID)
+	if err != nil {
+		return err
+	}
+
+	// get character skills
+	skills, err := GetCharacterSkills(*db, params.CharacterId)
+	if err != nil {
+		return err
+	}
+
+	// return skills to user
+	return ctx.Status(fiber.StatusCreated).JSON(skills);
+
+}
+
 // update character
 
 // delete character

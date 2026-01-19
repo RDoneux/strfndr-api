@@ -116,3 +116,23 @@ func GetCharacterWornItems(db sqlx.DB, characterId string) ([]models.Item, error
 	return wornItems, nil
 
 }
+
+func InsertCharacterSkill(db sqlx.DB, characterId, skillId string) error {
+
+	query, params, err := squirrel.
+		Insert("character_skills").
+		Columns("character_id", "skill_id").
+		Values(characterId, skillId).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(query, params...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+	
+}

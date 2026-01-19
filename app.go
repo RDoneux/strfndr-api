@@ -74,6 +74,7 @@ func main() {
 	app.Get("/protected/character/:id", characterController.GetCharacterById)
 	app.Get("/protected/characters/user/:id", characterController.GetCharactersByUserId)
 	app.Post("/protected/characters", characterController.CreateCharacter)
+	app.Put("/protected/characters/skill", characterController.AddCharacterSkill)
 
 	app.Listen(":3000")
 

@@ -1,0 +1,23 @@
+meta {
+  name: Add Character Skill
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{host}}/protected/characters/skill
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "skillId": "de27cf84-f574-11f0-bbc4-de7a48c22a5f",
+    "characterId": "7a38f774-2981-47e2-b245-e62de1ccb291"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
