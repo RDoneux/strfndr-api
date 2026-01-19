@@ -1,0 +1,15 @@
+meta {
+  name: Get Characters by User ID
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{host}}/protected/characters/user/7cf02857-f4a9-11f0-944c-be35d3ff38a0
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

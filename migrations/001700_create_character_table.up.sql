@@ -55,7 +55,7 @@ CREATE TABLE character_inabilities (
     FOREIGN KEY (skill_id) REFERENCES skills(id) ON DELETE CASCADE
 );
 
-CREATE TABLE character_pool_modifiers (
+CREATE TABLE character_pools (
     id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     character_id VARCHAR(36),
 
