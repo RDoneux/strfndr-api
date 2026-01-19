@@ -1,16 +1,15 @@
-package controllers
+package character
 
 import (
-	"database/sql"
-
 	"github.com/Masterminds/squirrel"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"github.com/rdoneux/nmna-api/models"
 )
 
 type CharacterController struct {
-	DB *sql.DB
+	DB *sqlx.DB
 }
 
 func (characterController *CharacterController) CreateCharacter(ctx *fiber.Ctx) error {
@@ -55,6 +54,21 @@ func (characterController *CharacterController) CreateCharacter(ctx *fiber.Ctx) 
 		return err
 	}
 
+	// insert character backgrounds
+	query, args, err = squirrel.
+		Insert("character_backgrounds").
+		Columns("character_id").
+		Values(newId).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	_, err = characterController.DB.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
 	// return character to user
 	return ctx.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"id": newId,
@@ -65,27 +79,45 @@ func (characterController *CharacterController) GetCharacterById(ctx *fiber.Ctx)
 
 	// get id from params
 	characterId := ctx.Params("id")
+	db := characterController.DB
 
 	// select character from db
-	query, args, err := squirrel.
-		Select("c.id", "c.name", "c.shins", "c.experience_points", "c.tier", "c.user_id", "cp.*").
-		From("characters c").
-		Where("c.id = ?", characterId).
-		Join("character_pools cp ON c.id = cp.character_id").
-		ToSql()
+	character, err := GetCharacterById(*db, characterId)
 	if err != nil {
 		return err
 	}
 
-	var character models.Character
-	err = characterController.DB.QueryRow(query, args...).
-		Scan(&character.ID, &character.Name, &character.Shins, &character.ExperiencePoints, &character.Tier, &character.UserId)
+	// fetch the character's skills separately
+	skills, err := GetCharacterSkills(*db, characterId)
 	if err != nil {
 		return err
 	}
+
+	// fetch the characters' inabilities separately
+	inabilities, err := GetCharacterInabilities(*db, characterId)
+	if err != nil {
+		return err
+	}
+
+	// fetch character items
+	items, err := GetCharacterItems(*db, characterId)
+	if err != nil {
+		return err
+	}
+
+	// fetch character worn items
+	wornItems, err := GetCharacterWornItems(*db, characterId)
+	if err != nil {
+		return err
+	}
+
+	character.CharacterSkills = skills
+	character.CharacterInabilities = inabilities
+	character.CharacterItems = items
+	character.CharacterWornItems = wornItems
 
 	// return character to user
-	return ctx.Status(fiber.StatusOK).JSON(character)
+	return ctx.Status(fiber.StatusOK).JSON(character.ToNested())
 }
 
 func (characterController *CharacterController) GetCharactersByUserId(ctx *fiber.Ctx) error {
@@ -107,7 +139,7 @@ func (characterController *CharacterController) GetCharactersByUserId(ctx *fiber
 	rows, err := characterController.DB.Query(query, args...)
 	var characters []models.Character = make([]models.Character, 0)
 	for rows.Next() {
-		var character models.Character;
+		var character models.Character
 		if err := rows.Scan(&character.ID, &character.Name, &character.Shins, &character.ExperiencePoints, &character.Tier, &character.UserId); err != nil {
 			return err
 		}
@@ -120,6 +152,5 @@ func (characterController *CharacterController) GetCharactersByUserId(ctx *fiber
 }
 
 // update character
-
 
 // delete character

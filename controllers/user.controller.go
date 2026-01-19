@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"database/sql"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/gofiber/fiber/v2"
@@ -11,7 +12,7 @@ import (
 )
 
 type UsersController struct {
-	DB *sql.DB
+	DB *sqlx.DB
 }
 
 func (usersController *UsersController) GetUsers(ctx *fiber.Ctx) error {

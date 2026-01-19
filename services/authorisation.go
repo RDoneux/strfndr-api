@@ -2,13 +2,13 @@ package services
 
 import (
 	"crypto/sha256"
-	"database/sql"
 	"os"
 	"strconv"
 	"time"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/jmoiron/sqlx"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -67,7 +67,7 @@ func HashTokenForStorage(token string) ([]byte, error) {
 	return bcrypt.GenerateFromPassword(digest[:], bcrypt.DefaultCost)
 }
 
-func UpdateRefreshTokenHashForUser(refreshToken, username string, db *sql.DB) error {
+func UpdateRefreshTokenHashForUser(refreshToken, username string, db *sqlx.DB) error {
 	// hash token
 	hashedToken, err := HashTokenForStorage(refreshToken)
 	if err != nil {

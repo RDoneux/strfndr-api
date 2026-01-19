@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"crypto/sha256"
-	"database/sql"
+	"github.com/jmoiron/sqlx"
 	"os"
 
 	"github.com/Masterminds/squirrel"
@@ -14,7 +14,7 @@ import (
 )
 
 type AuthorisationController struct {
-	DB *sql.DB
+	DB *sqlx.DB
 }
 
 func (securityController *AuthorisationController) RefreshToken(ctx *fiber.Ctx) error {

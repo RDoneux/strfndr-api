@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"fmt"
-	"database/sql"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/gofiber/fiber/v2"
 
@@ -11,7 +11,7 @@ import (
 )
 
 type UtilsController struct {
-	DB *sql.DB
+	DB *sqlx.DB
 }
 
 func (utilsController *UtilsController) GetHealth(ctx *fiber.Ctx) error {

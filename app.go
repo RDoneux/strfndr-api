@@ -1,13 +1,15 @@
 package main
 
 import (
-	"os"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/jwt/v3"
+	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
 	"github.com/rdoneux/nmna-api/services"
+	"os"
 
 	"github.com/rdoneux/nmna-api/controllers"
+	"github.com/rdoneux/nmna-api/controllers/character"
 )
 
 func main() {
@@ -15,11 +17,12 @@ func main() {
 	if err := godotenv.Load(); err != nil {
 		panic("Error loading .env file")
 	}
-	
-	database, err := services.ConnectDatabase()
+
+	db, err := services.ConnectDatabase()
 	if err != nil {
 		panic(err)
 	}
+	database := sqlx.NewDb(db, "mysql")
 
 	err = services.RunMigrations()
 	if err != nil {
@@ -30,10 +33,10 @@ func main() {
 
 	var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
 	app.Use("/protected", jwtware.New(jwtware.Config{
-		SigningKey: jwtSecret,
-		ContextKey: "user",
+		SigningKey:  jwtSecret,
+		ContextKey:  "user",
 		TokenLookup: "header:Authorization",
-		AuthScheme: "Bearer",
+		AuthScheme:  "Bearer",
 	}))
 
 	utilsController := &controllers.UtilsController{
@@ -48,7 +51,7 @@ func main() {
 		DB: database,
 	}
 
-	characterController := &controllers.CharacterController{
+	characterController := &character.CharacterController{
 		DB: database,
 	}
 
@@ -72,7 +75,6 @@ func main() {
 	app.Get("/protected/characters/user/:id", characterController.GetCharactersByUserId)
 	app.Post("/protected/characters", characterController.CreateCharacter)
 
-
-	app.Listen(":3000");
+	app.Listen(":3000")
 
 }
