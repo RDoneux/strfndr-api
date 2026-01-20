@@ -75,6 +75,11 @@ func main() {
 	app.Get("/protected/characters/user/:id", characterController.GetCharactersByUserId)
 	app.Post("/protected/characters", characterController.CreateCharacter)
 	app.Put("/protected/characters/skill", characterController.AddCharacterSkill)
+	app.Delete("/protected/characters/skill/:characterSkillId", characterController.RemoveCharacterSkill)
+	app.Put("/protected/characters/inability", characterController.AddCharacterInability)
+	app.Delete("/protected/characters/inability/:characterInabilityId", characterController.RemoveCharacterInability)
+	app.Put("/protected/characters/item", characterController.AddCharacterItem)
+	app.Delete("/protected/characters/item/:characterItemId", characterController.RemoveCharacterItem)
 
 	app.Listen(":3000")
 

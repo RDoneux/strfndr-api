@@ -32,6 +32,7 @@ const (
 )
 
 type Item struct {
+	ID            string        `json:"characterItemId"`
 	Name          string        `json:"name"`
 	ItemType      ItemType      `json:"itemType" db:"item_type"`
 	Description   string        `json:"description"`

@@ -27,16 +27,18 @@ const (
 )
 
 type Skill struct {
-	Name           string        `json:"name"`
-	Category       SkillCategory `json:"category"`
-	Description    string        `json:"description"`
-	AttackModifier int16         `json:"attackModifier" db:"attack_modifier"`
-	ArmourModifier int16         `json:"armourModifier" db:"armour_modifier"`
-	Cost           int16         `json:"cost"`
-	Type           SkillType     `json:"type"`
+	CharacterSkillId string        `json:"characterSkillId" db:"id"`
+	Name             string        `json:"name"`
+	Category         SkillCategory `json:"category"`
+	Description      string        `json:"description"`
+	AttackModifier   int16         `json:"attackModifier" db:"attack_modifier"`
+	ArmourModifier   int16         `json:"armourModifier" db:"armour_modifier"`
+	Cost             int16         `json:"cost"`
+	Type             SkillType     `json:"type"`
 }
 
 type Inability struct {
+	ID          string `json:"characterInabilityId" db:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
 }

@@ -31,7 +31,7 @@ func GetCharacterById(db sqlx.DB, characterId string) (models.Character, error) 
 func GetCharacterSkills(db sqlx.DB, characterId string) ([]models.Skill, error) {
 
 	query, args, err := squirrel.
-		Select("name", "category", "description", "attack_modifier", "armour_modifier", "cost", "type").
+		Select("cs.id", "name", "category", "description", "attack_modifier", "armour_modifier", "cost", "type").
 		From("character_skills cs").
 		Join("skills s ON cs.skill_id = s.id").
 		Where("cs.character_id = ?", characterId).
@@ -50,10 +50,82 @@ func GetCharacterSkills(db sqlx.DB, characterId string) ([]models.Skill, error) 
 
 }
 
+func GetCharacterIdByCharacterSkillId(db sqlx.DB, characterSkillId string) (string, error) {
+
+	query, args, err := squirrel.
+		Select("c.id").
+		From("character_skills cs").
+		Join("characters c ON c.id = cs.character_id").
+		Where("cs.id = ?", characterSkillId).
+		ToSql()
+	if err != nil {
+		return "", err
+	}
+
+	var props struct {
+		ID string `db:"id"`
+	}
+	err = db.Get(&props, query, args...)
+	if err != nil {
+		return "", err
+	}
+
+	return props.ID, nil
+
+}
+
+func GetCharacterIdByCharacterInabilityId(db sqlx.DB, characterInabilityId string) (string, error) {
+
+	query, args, err := squirrel.
+		Select("c.id").
+		From("character_inabilities ci").
+		Join("characters c ON c.id = ci.character_id").
+		Where("ci.id = ?", characterInabilityId).
+		ToSql()
+	if err != nil {
+		return "", err
+	}
+
+	var props struct {
+		ID string `db:"id"`
+	}
+	err = db.Get(&props, query, args...)
+	if err != nil {
+		return "", err
+	}
+
+	return props.ID, nil
+
+}
+
+func GetCharacterIdByCharacterItemId(db sqlx.DB, characterItemId string) (string, error) {
+
+	query, args, err := squirrel.
+		Select("c.id").
+		From("character_items ci").
+		Join("characters c ON c.id = ci.character_id").
+		Where("ci.id = ?", characterItemId).
+		ToSql()
+	if err != nil {
+		return "", err
+	}
+
+	var props struct {
+		ID string `db:"id"`
+	}
+	err = db.Get(&props, query, args...)
+	if err != nil {
+		return "", err
+	}
+
+	return props.ID, nil
+
+}
+
 func GetCharacterInabilities(db sqlx.DB, characterId string) ([]models.Inability, error) {
 
 	query, args, err := squirrel.
-		Select("name", "description").
+		Select("ci.id", "name", "description").
 		From("character_inabilities ci").
 		Join("inabilities i ON ci.inability_id = i.id").
 		Where("ci.character_id = ?", characterId).
@@ -75,7 +147,7 @@ func GetCharacterInabilities(db sqlx.DB, characterId string) ([]models.Inability
 func GetCharacterItems(db sqlx.DB, characterId string) ([]models.Item, error) {
 
 	query, args, err := squirrel.
-		Select("name", "item_type", "description", "weight", "price", "equip_location").
+		Select("ci.id", "name", "item_type", "description", "weight", "price", "equip_location").
 		From("character_items ci").
 		Join("items i ON ci.item_id = i.id").
 		Where("ci.character_id = ?", characterId).
@@ -134,5 +206,103 @@ func InsertCharacterSkill(db sqlx.DB, characterId, skillId string) error {
 	}
 
 	return nil
-	
+
+}
+
+func DeleteCharacterSkill(db sqlx.DB, characterSkillId string) error {
+
+	// delete character
+	query, args, err := squirrel.
+		Delete("character_skills").
+		Where("id = ?", characterSkillId).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
+func InsertCharacterInability(db sqlx.DB, characterId, inabilityId string) error {
+
+	query, args, err := squirrel.
+		Insert("character_inabilities").
+		Columns("character_id", "inability_id").
+		Values(characterId, inabilityId).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
+func DeleteCharacterInability(db sqlx.DB, characterInabilityId string) error {
+
+	query, args, err := squirrel.
+		Delete("character_inabilities ci").
+		Where("ci.id = ?", characterInabilityId).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
+func InsertCharacterItem(db sqlx.DB, characterId, itemId string) error {
+
+	query, args, err := squirrel.
+		Insert("character_items").
+		Columns("character_id", "item_id").
+		Values(characterId, itemId).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
+func DeleteCharacterItem(db sqlx.DB, characterItemId string) error {
+
+	query, args, err := squirrel.
+		Delete("character_items ci").
+		Where("ci.id = ?", characterItemId).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
 }

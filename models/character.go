@@ -78,3 +78,13 @@ func (character *Character) ToNested() map[string]any {
 		"characterWornItems":   character.CharacterWornItems,
 	}
 }
+
+func (character *Character) ToList() map[string]any {
+	return map[string]any{
+		"id":               character.ID,
+		"name":             character.Name,
+		"shins":            character.Shins,
+		"experiencePoints": character.ExperiencePoints,
+		"tier":             character.Tier,
+	}
+}

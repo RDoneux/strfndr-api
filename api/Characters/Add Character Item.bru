@@ -1,0 +1,23 @@
+meta {
+  name: Add Character Item
+  type: http
+  seq: 8
+}
+
+put {
+  url: {{host}}/protected/characters/item
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "characterId": "7a38f774-2981-47e2-b245-e62de1ccb291",
+    "itemId": "de1ec9eb-f574-11f0-bbc4-de7a48c22a5f"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
