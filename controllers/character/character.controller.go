@@ -366,13 +366,13 @@ func (characterController *CharacterController) AddCharacterWornItem(ctx *fiber.
 	}
 
 	// chack item can be equipped to the desired location
-	item, err := GetCharacterItemById(*db, params.CharacterItemId)
-	if err != nil {
-		return err
-	}
-	if item.EquipLocation != params.Location {
-		return ctx.Status(fiber.StatusConflict).SendString("Item can only be equipped to " + string(item.EquipLocation))
-	}
+	// item, err := GetCharacterItemById(*db, params.CharacterItemId)
+	// if err != nil {
+	// 	return err
+	// }
+	// if item.EquipLocation != params.Location {
+	// 	return ctx.Status(fiber.StatusConflict).SendString("Item can only be equipped to " + string(item.EquipLocation))
+	// }
 
 	// insert character worn item
 	err = InsertCharacterWornItem(*db, params.CharacterId, params.CharacterItemId, params.Location)

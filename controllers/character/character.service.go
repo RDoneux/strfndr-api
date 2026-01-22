@@ -147,7 +147,7 @@ func GetCharacterInabilities(db sqlx.DB, characterId string) ([]models.Inability
 func GetCharacterItems(db sqlx.DB, characterId string) ([]models.Item, error) {
 
 	query, args, err := squirrel.
-		Select("ci.id", "name", "item_type", "description", "weight", "price", "equip_location").
+		Select("ci.id", "name", "item_type", "description", "weight", "price").
 		From("character_items ci").
 		Join("items i ON ci.item_id = i.id").
 		Where("ci.character_id = ?", characterId).
@@ -169,7 +169,7 @@ func GetCharacterItems(db sqlx.DB, characterId string) ([]models.Item, error) {
 func GetCharacterWornItems(db sqlx.DB, characterId string) ([]models.Item, error) {
 
 	query, args, err := squirrel.
-		Select("i.id", "name", "item_type", "description", "weight", "price", "equip_location").
+		Select("i.id", "name", "item_type", "description", "weight", "price").
 		From("character_worn_items cwi").
 		Join("character_items ci ON cwi.character_items_id = ci.id").
 		Join("items i ON ci.item_id = i.id").
@@ -192,7 +192,7 @@ func GetCharacterWornItems(db sqlx.DB, characterId string) ([]models.Item, error
 func GetCharacterItemById (db sqlx.DB, characterItemId string) (models.Item, error) {
 
 	query, args, err := squirrel.
-		Select("i.id as id, name, item_type, description, weight, price, equip_location").
+		Select("i.id as id, name, item_type, description, weight, price").
 		From("character_items ci").
 		Join("items i ON ci.item_id = i.id").
 		ToSql()

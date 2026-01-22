@@ -38,5 +38,4 @@ type Item struct {
 	Description   string        `json:"description" db:"description"`
 	Weight        float64       `json:"weight" db:"weight"`
 	Price         float64       `json:"price" db:"price"`
-	EquipLocation EquipLocation `json:"equipLocation" db:"equip_location"`
 }
