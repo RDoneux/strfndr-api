@@ -57,8 +57,8 @@ func (characterController *CharacterController) CreateCharacter(ctx *fiber.Ctx) 
 	// insert character backgrounds
 	query, args, err = squirrel.
 		Insert("character_backgrounds").
-		Columns("character_id").
-		Values(newId).
+		Columns("character_id", "name", "description").
+		Values(newId, "", "").
 		ToSql()
 	if err != nil {
 		return err
@@ -321,6 +321,73 @@ func (characterController *CharacterController) RemoveCharacterItem(ctx *fiber.C
 
 	// return items to user
 	return ctx.Status(fiber.StatusOK).JSON(items)
+
+}
+
+func (characterController *CharacterController) UpdateCharacterBackground(ctx *fiber.Ctx) error {
+
+	// get character background from body
+	db := characterController.DB
+	var characterBackground models.CharacterBackground
+	err := ctx.BodyParser(&characterBackground)
+	if err != nil {
+		return err
+	}
+
+	// update character background
+	err = UpdateCharacterBackground(*db, characterBackground)
+	if err != nil {
+		return err
+	}
+
+	// get updated character background
+	updatedCharacterBackground, err := GetCharacterBackground(*db, characterBackground.CBCharacterId)
+	if err != nil {
+		return err
+	}
+
+	// return background
+	return ctx.Status(fiber.StatusOK).JSON(updatedCharacterBackground)
+
+}
+
+func (characterController *CharacterController) AddCharacterWornItem(ctx *fiber.Ctx) error {
+
+	// get character item id, character id & location from params
+	db := characterController.DB
+	var params struct {
+		CharacterItemId string               `json:"characterItemId"`
+		CharacterId     string               `json:"characterId"`
+		Location        models.EquipLocation `json:"location"`
+	}
+	err := ctx.BodyParser(&params)
+	if err != nil {
+		return err
+	}
+
+	// chack item can be equipped to the desired location
+	item, err := GetCharacterItemById(*db, params.CharacterItemId)
+	if err != nil {
+		return err
+	}
+	if item.EquipLocation != params.Location {
+		return ctx.Status(fiber.StatusConflict).SendString("Item can only be equipped to " + string(item.EquipLocation))
+	}
+
+	// insert character worn item
+	err = InsertCharacterWornItem(*db, params.CharacterId, params.CharacterItemId, params.Location)
+	if err != nil {
+		return err
+	}
+
+	// get updated worn item
+	characterWornItems, err := GetCharacterWornItems(*db, params.CharacterId)
+	if err != nil {
+		return err
+	}
+
+	// return worn items to user
+	return ctx.Status(fiber.StatusOK).JSON(characterWornItems)
 
 }
 

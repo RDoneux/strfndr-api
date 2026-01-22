@@ -1,0 +1,24 @@
+meta {
+  name: Update Character Background
+  type: http
+  seq: 10
+}
+
+put {
+  url: {{host}}/protected/characters/background
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "characterId": "c1f034a7-b015-457d-8fd4-df8a3f0530dc",
+    "name": "Updated Name of the background",
+    "description": "Updated Description"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

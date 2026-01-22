@@ -1,11 +1,11 @@
 meta {
-  name: Add Character Item
+  name: Update Character Worn Items
   type: http
-  seq: 8
+  seq: 11
 }
 
 put {
-  url: {{host}}/protected/characters/item
+  url: {{host}}/protected/character/worn-items
   body: json
   auth: inherit
 }
@@ -13,7 +13,8 @@ put {
 body:json {
   {
     "characterId": "6223a622-f6b3-48aa-ab78-2292392a821d",
-    "itemId": "50af1d29-f76d-11f0-be5e-82bbe95d8cd4"
+    "characterItemId": "a4b4b2a6-f76d-11f0-be5e-82bbe95d8cd4",
+    "location": "HANDS"
   }
 }
 

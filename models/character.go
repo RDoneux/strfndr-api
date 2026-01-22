@@ -1,9 +1,5 @@
 package models
 
-import (
-	"database/sql"
-)
-
 type CharacterType string
 
 const (
@@ -29,7 +25,7 @@ type Character struct {
 }
 
 type CharacterPool struct {
-	CPCharacterId               string `json:"cpCharacterId" db:"character_id"`
+	CPCharacterId               string `json:"characterId" db:"character_id"`
 	MightCurrent                uint32 `json:"mightCurrent" db:"might_current"`
 	MightMax                    uint32 `json:"mightMax" db:"might_max"`
 	MightEdge                   uint32 `json:"mightEdge" db:"might_edge"`
@@ -51,15 +47,21 @@ type CharacterPool struct {
 }
 
 type CharacterBackground struct {
-	CBCharacterId string         `json:"cbCharacterId" db:"character_id"`
-	CBName        string         `json:"name"`
-	Description   sql.NullString `json:"description"`
+	CBCharacterId string `json:"cbCharacterId" db:"character_id"`
+	CBName        string `json:"name" db:"name"`
+	Description   string `json:"description" db:"description"`
 }
 
 type CharacterInabilities struct {
 	CICharacterId string        `json:"ciCharacterId" db:"character_id"`
 	SkillID       string        `json:"skillId" db:"skill_id"`
 	Source        CharacterType `json:"source"`
+}
+
+type CharacterWornItem struct {
+	CWICharacterId  string `json:"cwiCharacterId" db:"character_id"`
+	CharacterItemId string `json:"characterItemId" db:"character_item_id"`
+	EquipLocation   string `json:"equipLocation" db:"location"`
 }
 
 func (character *Character) ToNested() map[string]any {

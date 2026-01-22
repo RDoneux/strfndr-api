@@ -38,7 +38,7 @@ CREATE TABLE character_items (
 CREATE TABLE character_worn_items (
     id VARCHAR(36) PRIMARY KEY DEFAULT(UUID()),
     character_id VARCHAR(36) NOT NULL,
-    character_items_id VARCHAR(36) NOT NULL,
+    character_items_id VARCHAR(36) NOT NULL UNIQUE,
     location ENUM(
         'HEAD',
         'EYES',

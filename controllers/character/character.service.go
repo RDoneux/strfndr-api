@@ -169,7 +169,7 @@ func GetCharacterItems(db sqlx.DB, characterId string) ([]models.Item, error) {
 func GetCharacterWornItems(db sqlx.DB, characterId string) ([]models.Item, error) {
 
 	query, args, err := squirrel.
-		Select("name", "item_type", "description", "weight", "price", "equip_location").
+		Select("i.id", "name", "item_type", "description", "weight", "price", "equip_location").
 		From("character_worn_items cwi").
 		Join("character_items ci ON cwi.character_items_id = ci.id").
 		Join("items i ON ci.item_id = i.id").
@@ -188,6 +188,27 @@ func GetCharacterWornItems(db sqlx.DB, characterId string) ([]models.Item, error
 	return wornItems, nil
 
 }
+
+func GetCharacterItemById (db sqlx.DB, characterItemId string) (models.Item, error) {
+
+	query, args, err := squirrel.
+		Select("i.id as id, name, item_type, description, weight, price, equip_location").
+		From("character_items ci").
+		Join("items i ON ci.item_id = i.id").
+		ToSql()
+	if err != nil {
+		return models.Item{}, err
+	}
+
+	var item models.Item
+	err = db.Get(&item, query, args...)
+	if err != nil {
+		return models.Item{}, err
+	}
+
+	return item, nil
+
+}	
 
 func InsertCharacterSkill(db sqlx.DB, characterId, skillId string) error {
 
@@ -293,6 +314,67 @@ func DeleteCharacterItem(db sqlx.DB, characterItemId string) error {
 	query, args, err := squirrel.
 		Delete("character_items ci").
 		Where("ci.id = ?", characterItemId).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
+func UpdateCharacterBackground(db sqlx.DB, characterBackground models.CharacterBackground) error {
+
+	query, args, err := squirrel.
+		Update("character_backgrounds").
+		Set("name", characterBackground.CBName).
+		Set("description", characterBackground.Description).
+		Where("character_id = ?", characterBackground.CBCharacterId).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
+func GetCharacterBackground (db sqlx.DB, characterBackgroundId string) (models.CharacterBackground, error) {
+
+	query, args, err := squirrel.
+		Select("character_id", "name", "description").
+		From("character_backgrounds").
+		Where("character_id = ?", characterBackgroundId).
+		ToSql()
+	if err != nil {
+		return models.CharacterBackground{}, err
+	}
+
+	var characterBackground models.CharacterBackground
+	err = db.Get(&characterBackground, query, args...)
+	if err != nil {
+		return models.CharacterBackground{}, err
+	}
+
+	return characterBackground, nil
+}
+
+func InsertCharacterWornItem (db sqlx.DB, characterId, characterItemId string, location models.EquipLocation) error {
+
+	query, args, err := squirrel.
+		Insert("character_worn_items").
+		Columns("character_id", "character_items_id", "location").
+		Values(characterId, characterItemId, location).
 		ToSql()
 	if err != nil {
 		return err
