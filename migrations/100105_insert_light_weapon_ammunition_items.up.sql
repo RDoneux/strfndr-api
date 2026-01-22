@@ -3,24 +3,21 @@ INSERT INTO items (
     description,
     weight,
     price,
-    item_type,
-    equip_location
+    item_type
 ) VALUES 
     (
         'Dart',
         'A small, pointed projectile that can be thrown or fired from a blowgun or dart thrower.',
         1.0,
         0.25,
-        'AMMUNITION',
-        'NONE'
+        'AMMUNITION'
     ),
     (
         '5-disk buzzer magazine',
         'A magazine holding 5 bladed disks for use with a buzzer weapon.',
         1.0,
         1,
-        'AMMUNITION',
-        'NONE'
+        'AMMUNITION'
     );
 
 INSERT INTO ammunition (

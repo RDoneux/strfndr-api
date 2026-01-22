@@ -4,24 +4,24 @@ INSERT INTO
         description,
         weight,
         price,
-        item_type,
-        equip_location
+        item_type
     )
 VALUES (
         'Heavy Bolt',
         'A large, powerful projectile used with heavy crossbows.',
         1.0,
         0.40,
-        'AMMUNITION',
-        'NONE'
+        'AMMUNITION'
     );
 
 INSERT INTO
-    ammunition (
-        item_id,
-        type
-    )
+    ammunition (item_id, type)
 VALUES (
-        (SELECT id FROM items WHERE name = 'Heavy Bolt'),
+        (
+            SELECT id
+            FROM items
+            WHERE
+                name = 'Heavy Bolt'
+        ),
         'HEAVY_BOLT'
     );

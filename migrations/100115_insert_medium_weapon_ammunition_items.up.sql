@@ -3,24 +3,21 @@ INSERT INTO items (
     description,
     weight,
     price,
-    item_type,
-    equip_location
+    item_type
 ) VALUES 
     (
         'Arrow',
         'A standard projectile used with bows.',
         1.0,
         0.40,
-        'AMMUNITION',
-        'NONE'
+        'AMMUNITION'
     ),
     (
         'Bolt',
         'A sturdy projectile used with crossbows.',
         1.0,
         0.40,
-        'AMMUNITION',
-        'NONE'
+        'AMMUNITION'
     );
 
 INSERT INTO ammunition (
