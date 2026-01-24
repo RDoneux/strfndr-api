@@ -59,8 +59,8 @@ func (characterController *CharacterController) CreateCharacter(ctx *fiber.Ctx) 
 	// insert character backgrounds
 	query, args, err = squirrel.
 		Insert("character_backgrounds").
-		Columns("character_id", "name", "description").
-		Values(newId, "", "").
+		Columns("character_id", "description").
+		Values(newId, "").
 		ToSql()
 	if err != nil {
 		return err
@@ -330,8 +330,10 @@ func (characterController *CharacterController) UpdateCharacterBackground(ctx *f
 
 	// get character background from body
 	db := characterController.DB
+	characterId := ctx.Params("characterId")
 	var characterBackground models.CharacterBackground
 	err := ctx.BodyParser(&characterBackground)
+	characterBackground.CharacterId = characterId
 	if err != nil {
 		return err
 	}
@@ -343,7 +345,7 @@ func (characterController *CharacterController) UpdateCharacterBackground(ctx *f
 	}
 
 	// get updated character background
-	updatedCharacterBackground, err := GetCharacterBackground(*db, characterBackground.CBCharacterId)
+	updatedCharacterBackground, err := GetCharacterBackground(*db, characterId)
 	if err != nil {
 		return err
 	}
@@ -491,6 +493,34 @@ func (characterController *CharacterController) UpdateCharacterPool(ctx *fiber.C
 
 	// return pool to user
 	return ctx.Status(fiber.StatusOK).JSON(characterPool)
+
+}
+
+func (characterController *CharacterController) UpdateCharacterInformation(ctx *fiber.Ctx) error {
+
+	db := characterController.DB
+	// get character id & information from body & path params
+	characterId := ctx.Params("characterId")
+	var characterInfo models.CharacterInformation
+	err := ctx.BodyParser(&characterInfo)
+	if err != nil {
+		return err
+	}
+
+	// update character info
+	err = UpdateCharacterInformation(*db, characterId, characterInfo)
+	if err != nil {
+		return err
+	}
+
+	// get updated info
+	characterInfo, err = GetCharacterInformation(*db, characterId)
+	if err != nil {
+		return err
+	}
+
+	// return info to user
+	return ctx.Status(fiber.StatusOK).JSON(characterInfo)
 
 }
 

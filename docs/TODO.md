@@ -4,5 +4,6 @@
 
 ### For Characters
 
-- [ ] Update character pools
+- [x] Update character pools
 - [ ] Ability to update shins, experience points and tier
+- [ ] Update character put endpoints to get id from url

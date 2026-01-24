@@ -81,10 +81,11 @@ func main() {
 	app.Delete("/protected/characters/inability/:characterInabilityId", characterController.RemoveCharacterInability)
 	app.Put("/protected/characters/item", characterController.AddCharacterItem)
 	app.Delete("/protected/characters/item/:characterItemId", characterController.RemoveCharacterItem)
-	app.Put("/protected/characters/background", characterController.UpdateCharacterBackground)
+	app.Put("/protected/characters/background/:characterId", characterController.UpdateCharacterBackground)
 	app.Put("/protected/characters/worn-items", characterController.AddCharacterWornItem)
 	app.Delete("/protected/characters/worn-items/:characterWornItemId", characterController.RemoveCharacterWornItem)
 	app.Put("/protected/characters/pool/:characterId", characterController.UpdateCharacterPool)
+	app.Put("/protected/characters/info/:characterId", characterController.UpdateCharacterInformation)
 
 	app.Listen(":3000")
 

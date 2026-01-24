@@ -5,15 +5,17 @@ meta {
 }
 
 put {
-  url: {{host}}/protected/characters/background
+  url: {{host}}/protected/characters/background/:characterId
   body: json
   auth: inherit
 }
 
+params:path {
+  characterId: c8fb1128-c60d-446e-ab00-3ca809dea92d
+}
+
 body:json {
   {
-    "characterId": "c1f034a7-b015-457d-8fd4-df8a3f0530dc",
-    "name": "Updated Name of the background",
     "description": "Updated Description"
   }
 }

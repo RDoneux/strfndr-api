@@ -1,0 +1,29 @@
+meta {
+  name: Update Character Information
+  type: http
+  seq: 14
+}
+
+put {
+  url: {{host}}/protected/characters/info/:characterId
+  body: json
+  auth: inherit
+}
+
+params:path {
+  characterId: c8fb1128-c60d-446e-ab00-3ca809dea92d
+}
+
+body:json {
+  {
+    "name": "New Character Name",
+    "shins": 300,
+    "experiencePoints": 12932,
+    "tier": 2
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

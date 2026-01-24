@@ -10,11 +10,8 @@ const (
 )
 
 type Character struct {
+	CharacterInformation
 	ID                   string      `json:"id"`
-	Name                 string      `json:"name"`
-	Shins                string      `json:"shins"`
-	ExperiencePoints     uint32      `json:"experiencePoints" db:"experience_points"`
-	Tier                 uint8       `json:"tier"`
 	UserId               string      `json:"userId" db:"user_id"`
 	CharacterSkills      []Skill     `json:"skills"`
 	CharacterInabilities []Inability `json:"inabilities"`
@@ -24,8 +21,15 @@ type Character struct {
 	CharacterBackground
 }
 
+type CharacterInformation struct {
+	Name             string `json:"name"`
+	Shins            int32  `json:"shins"`
+	ExperiencePoints uint32 `json:"experiencePoints" db:"experience_points"`
+	Tier             uint8  `json:"tier"`
+}
+
 type CharacterPool struct {
-	CharacterId                 string `json:"characterId" db:"character_id"`
+	CharacterId                 string `json:"poolCharacterId" db:"character_id"`
 	MightCurrent                uint32 `json:"mightCurrent" db:"might_current"`
 	MightMax                    uint32 `json:"mightMax" db:"might_max"`
 	MightEdge                   uint32 `json:"mightEdge" db:"might_edge"`
@@ -47,19 +51,18 @@ type CharacterPool struct {
 }
 
 type CharacterBackground struct {
-	CBCharacterId string `json:"cbCharacterId" db:"character_id"`
-	CBName        string `json:"name" db:"name"`
-	Description   string `json:"description" db:"description"`
+	CharacterId string `json:"backgroundCharacterId" db:"character_id"`
+	Description string `json:"description" db:"description"`
 }
 
 type CharacterInabilities struct {
-	CICharacterId string        `json:"ciCharacterId" db:"character_id"`
-	SkillID       string        `json:"skillId" db:"skill_id"`
-	Source        CharacterType `json:"source"`
+	CharacterId string        `json:"inabilitiesCharacterId" db:"character_id"`
+	SkillID     string        `json:"skillId" db:"skill_id"`
+	Source      CharacterType `json:"source"`
 }
 
 type CharacterWornItem struct {
-	CWICharacterId  string `json:"cwiCharacterId" db:"character_id"`
+	CharacterId     string `json:"wornItemCharacterId" db:"character_id"`
 	CharacterItemId string `json:"characterItemId" db:"character_item_id"`
 	EquipLocation   string `json:"equipLocation" db:"location"`
 }

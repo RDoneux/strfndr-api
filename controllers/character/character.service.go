@@ -9,7 +9,7 @@ import (
 func GetCharacterById(db sqlx.DB, characterId string) (models.Character, error) {
 
 	query, args, err := squirrel.
-		Select("c.id", "c.name", "c.shins", "c.experience_points", "c.tier", "c.user_id", "cp.*", "cb.*").
+		Select("c.id", "c.name", "c.shins", "c.experience_points", "c.tier", "c.user_id", "cp.*", "cb.description").
 		From("characters c").
 		Join("character_pools cp ON c.id = cp.character_id").
 		LeftJoin("character_backgrounds cb ON c.id = cb.character_id").
@@ -402,9 +402,8 @@ func UpdateCharacterBackground(db sqlx.DB, characterBackground models.CharacterB
 
 	query, args, err := squirrel.
 		Update("character_backgrounds").
-		Set("name", characterBackground.CBName).
 		Set("description", characterBackground.Description).
-		Where("character_id = ?", characterBackground.CBCharacterId).
+		Where("character_id = ?", characterBackground.CharacterId).
 		ToSql()
 	if err != nil {
 		return err
@@ -422,7 +421,7 @@ func UpdateCharacterBackground(db sqlx.DB, characterBackground models.CharacterB
 func GetCharacterBackground(db sqlx.DB, characterBackgroundId string) (models.CharacterBackground, error) {
 
 	query, args, err := squirrel.
-		Select("character_id", "name", "description").
+		Select("character_id", "description").
 		From("character_backgrounds").
 		Where("character_id = ?", characterBackgroundId).
 		ToSql()
@@ -496,5 +495,49 @@ func GetCharacterPools(db sqlx.DB, characterId string) (models.CharacterPool, er
 	}
 
 	return characterPool, nil
+
+}
+
+func UpdateCharacterInformation(db sqlx.DB, characterId string, characterInfo models.CharacterInformation) error {
+
+	query, args, err := squirrel.
+		Update("characters").
+		Set("name", characterInfo.Name).
+		Set("experience_points", characterInfo.ExperiencePoints). 
+		Set("tier", characterInfo.Tier).
+		Set("shins", characterInfo.Shins).
+		Where("id = ?", characterId).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
+func GetCharacterInformation(db sqlx.DB, characterId string) (models.CharacterInformation, error) {
+
+	query, args, err := squirrel.
+		Select("name", "shins", "experience_points", "tier").
+		From("characters").
+		Where("id = ?", characterId).
+		ToSql()
+	if err != nil {
+		return models.CharacterInformation{}, err
+	}
+
+	var characterInfo models.CharacterInformation
+	err = db.Get(&characterInfo, query, args...)
+	if err != nil {
+		return models.CharacterInformation{}, err
+	}
+
+	return characterInfo, nil
 
 }
