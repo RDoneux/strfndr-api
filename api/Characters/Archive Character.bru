@@ -1,0 +1,20 @@
+meta {
+  name: Archive Character
+  type: http
+  seq: 15
+}
+
+delete {
+  url: {{host}}/protected/characters/:characterId/archive
+  body: none
+  auth: inherit
+}
+
+params:path {
+  characterId: c2323491-4b2e-4d3a-9725-b81f86258681
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

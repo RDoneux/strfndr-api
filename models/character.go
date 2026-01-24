@@ -12,7 +12,7 @@ const (
 type Character struct {
 	CharacterInformation
 	ID                   string      `json:"id"`
-	UserId               string      `json:"userId" db:"user_id"`
+	UserId               *string      `json:"userId" db:"user_id"`
 	CharacterSkills      []Skill     `json:"skills"`
 	CharacterInabilities []Inability `json:"inabilities"`
 	CharacterItems       []Item      `json:"items"`

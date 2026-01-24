@@ -508,6 +508,28 @@ func (characterController *CharacterController) UpdateCharacterInformation(ctx *
 
 }
 
-// update character
+func (characterController *CharacterController) ArchiveCharacter(ctx *fiber.Ctx) error {
 
-// delete character
+	db := characterController.DB
+
+	// Get characterId from params
+	characterId := ctx.Params("characterId")
+
+	// update character to remove userId
+	query, args, err := squirrel.
+		Update("characters").
+		Set("user_id", nil).
+		Where("id = ?", characterId).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(query, args...)
+	if err != nil {	
+		return err
+	}
+
+	return ctx.SendStatus(fiber.StatusNoContent)
+
+}
