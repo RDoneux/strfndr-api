@@ -5,16 +5,14 @@ meta {
 }
 
 put {
-  url: {{host}}/protected/characters/skill
-  body: json
+  url: {{host}}/protected/characters/:characterId/skill/:skillId
+  body: none
   auth: inherit
 }
 
-body:json {
-  {
-    "skillId": "de27d013-f574-11f0-bbc4-de7a48c22a5f",
-    "characterId": "7a38f774-2981-47e2-b245-e62de1ccb291"
-  }
+params:path {
+  skillId: f8a2fd99-f96c-11f0-8d76-06b3fdb51f1c
+  characterId: c2323491-4b2e-4d3a-9725-b81f86258681
 }
 
 settings {

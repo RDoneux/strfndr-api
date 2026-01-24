@@ -5,16 +5,14 @@ meta {
 }
 
 put {
-  url: {{host}}/protected/characters/item
-  body: json
+  url: {{host}}/protected/characters/:characterId/item/:itemId
+  body: none
   auth: inherit
 }
 
-body:json {
-  {
-    "characterId": "f1e65fbb-afc0-4ff8-8716-44693ff0fe5b",
-    "itemId": "8eeb639e-f796-11f0-be5e-82bbe95d8cd4"
-  }
+params:path {
+  itemId: f89b1a42-f96c-11f0-8d76-06b3fdb51f1c
+  characterId: c2323491-4b2e-4d3a-9725-b81f86258681
 }
 
 settings {

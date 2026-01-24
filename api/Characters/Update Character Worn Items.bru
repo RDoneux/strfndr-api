@@ -5,16 +5,19 @@ meta {
 }
 
 put {
-  url: {{host}}/protected/characters/worn-items
+  url: {{host}}/protected/characters/:characterId/worn-items/:characterItemId
   body: json
   auth: inherit
 }
 
+params:path {
+  characterItemId: 70e4476c-f96f-11f0-8d76-06b3fdb51f1c
+  characterId: c2323491-4b2e-4d3a-9725-b81f86258681
+}
+
 body:json {
   {
-    "characterId": "f1e65fbb-afc0-4ff8-8716-44693ff0fe5b",
-    "characterItemId": "1dcbd691-f8fc-11f0-be5e-82bbe95d8cd4",
-    "location": "LEGS"
+    "location": "HANDS"
   }
 }
 

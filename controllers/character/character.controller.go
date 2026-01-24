@@ -157,22 +157,17 @@ func (characterController *CharacterController) AddCharacterSkill(ctx *fiber.Ctx
 
 	// get skill id from body
 	db := characterController.DB
-	var params struct {
-		SkillID     string `json:"skillId"`
-		CharacterId string `json:"characterId"`
-	}
-	if err := ctx.BodyParser(&params); err != nil {
-		return err
-	}
+	characterId := ctx.Params("characterId")
+	skillId := ctx.Params("skillId")
 
 	// construct insert statement
-	err := InsertCharacterSkill(*db, params.CharacterId, params.SkillID)
+	err := InsertCharacterSkill(*db, characterId, skillId)
 	if err != nil {
 		return err
 	}
 
 	// get character skills
-	skills, err := GetCharacterSkills(*db, params.CharacterId)
+	skills, err := GetCharacterSkills(*db, characterId)
 	if err != nil {
 		return err
 	}
@@ -215,22 +210,17 @@ func (characterController *CharacterController) AddCharacterInability(ctx *fiber
 
 	// get props from body
 	db := characterController.DB
-	var params struct {
-		CharacterID string `json:"characterId"`
-		InabilityID string `json:"inabilityId"`
-	}
-	if err := ctx.BodyParser(&params); err != nil {
-		return err
-	}
+	characterId := ctx.Params("characterId")
+	inabilityId := ctx.Params("inabilityId")
 
 	// insert inability
-	err := InsertCharacterInability(*db, params.CharacterID, params.InabilityID)
+	err := InsertCharacterInability(*db, characterId, inabilityId)
 	if err != nil {
 		return err
 	}
 
 	// get updated inabilities
-	inabilities, err := GetCharacterInabilities(*db, params.CharacterID)
+	inabilities, err := GetCharacterInabilities(*db, characterId)
 	if err != nil {
 		return err
 	}
@@ -270,24 +260,18 @@ func (characterController *CharacterController) RemoveCharacterInability(ctx *fi
 func (characterController *CharacterController) AddCharacterItem(ctx *fiber.Ctx) error {
 
 	db := characterController.DB
-	// get params from body
-	var params struct {
-		CharacterID string `json:"characterId"`
-		ItemId      string `json:"itemId"`
-	}
-	err := ctx.BodyParser(&params)
-	if err != nil {
-		return err
-	}
+	// get ids from params
+	itemId := ctx.Params("itemId")
+	characterId := ctx.Params("characterId")
 
 	// insert item
-	err = InsertCharacterItem(*db, params.CharacterID, params.ItemId)
+	err := InsertCharacterItem(*db, characterId, itemId)
 	if err != nil {
 		return err
 	}
 
 	// get updated items
-	items, err := GetCharacterItems(*db, params.CharacterID)
+	items, err := GetCharacterItems(*db, characterId)
 	if err != nil {
 		return err
 	}
@@ -359,9 +343,9 @@ func (characterController *CharacterController) AddCharacterWornItem(ctx *fiber.
 
 	// get character item id, character id & location from params
 	db := characterController.DB
+	characterItemId := ctx.Params("characterItemId")
+	characterId := ctx.Params("characterId")
 	var params struct {
-		CharacterItemId string               `json:"characterItemId"`
-		CharacterId     string               `json:"characterId"`
 		Location        models.EquipLocation `json:"location"`
 	}
 	err := ctx.BodyParser(&params)
@@ -370,7 +354,7 @@ func (characterController *CharacterController) AddCharacterWornItem(ctx *fiber.
 	}
 
 	// check that the desired equip location is included in the Item equip location list
-	characterItem, err := GetCharacterItemById(*db, params.CharacterItemId)
+	characterItem, err := GetCharacterItemById(*db, characterItemId)
 	if err != nil {
 		return err
 	}
@@ -381,7 +365,7 @@ func (characterController *CharacterController) AddCharacterWornItem(ctx *fiber.
 	}
 
 	// check that desired equip location does not already have an item in it
-	characterWornItems, err := GetCharacterWornItems(*db, params.CharacterId)
+	characterWornItems, err := GetCharacterWornItems(*db, characterId)
 	for _, wornItem := range characterWornItems {
 		if *wornItem.EquippedAt == params.Location {
 			return ctx.Status(fiber.StatusBadRequest).SendString("Equip location already occupied")
@@ -389,13 +373,13 @@ func (characterController *CharacterController) AddCharacterWornItem(ctx *fiber.
 	}
 
 	// insert character worn item
-	err = InsertCharacterWornItem(*db, params.CharacterId, params.CharacterItemId, params.Location)
+	err = InsertCharacterWornItem(*db, characterId, characterItemId, params.Location)
 	if err != nil {
 		return err
 	}
 
 	// get updated worn item
-	characterWornItems, err = GetCharacterWornItems(*db, params.CharacterId)
+	characterWornItems, err = GetCharacterWornItems(*db, characterId)
 	if err != nil {
 		return err
 	}
