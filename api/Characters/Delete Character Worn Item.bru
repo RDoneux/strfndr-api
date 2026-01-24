@@ -1,0 +1,20 @@
+meta {
+  name: Delete Character Worn Item
+  type: http
+  seq: 12
+}
+
+delete {
+  url: {{host}}/protected/characters/worn-items/:characterWornItemId
+  body: none
+  auth: inherit
+}
+
+params:path {
+  characterWornItemId: 541acd3b-f902-11f0-be5e-82bbe95d8cd4
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

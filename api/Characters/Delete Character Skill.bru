@@ -5,9 +5,13 @@ meta {
 }
 
 delete {
-  url: {{host}}/protected/characters/skill/2ddcf8f7-f57f-11f0-bbc4-de7a48c22a5f
+  url: {{host}}/protected/characters/skill/:characterSkillId
   body: none
   auth: inherit
+}
+
+params:path {
+  characterSkillId: 2ddcf8f7-f57f-11f0-bbc4-de7a48c22a5f
 }
 
 settings {

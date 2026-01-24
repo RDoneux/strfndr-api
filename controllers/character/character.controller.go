@@ -1,6 +1,8 @@
 package character
 
 import (
+	"slices"
+
 	"github.com/Masterminds/squirrel"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
@@ -365,14 +367,24 @@ func (characterController *CharacterController) AddCharacterWornItem(ctx *fiber.
 		return err
 	}
 
-	// chack item can be equipped to the desired location
-	// item, err := GetCharacterItemById(*db, params.CharacterItemId)
-	// if err != nil {
-	// 	return err
-	// }
-	// if item.EquipLocation != params.Location {
-	// 	return ctx.Status(fiber.StatusConflict).SendString("Item can only be equipped to " + string(item.EquipLocation))
-	// }
+	// check that the desired equip location is included in the Item equip location list
+	characterItem, err := GetCharacterItemById(*db, params.CharacterItemId)
+	if err != nil {
+		return err
+	}
+	possibleEquipLocations := characterItem.EquipLocations
+	found := slices.Contains(possibleEquipLocations, string(params.Location))
+	if !found {
+		return ctx.Status(fiber.StatusBadRequest).SendString("Invalid equip location for this item")
+	}
+
+	// check that desired equip location does not already have an item in it
+	characterWornItems, err := GetCharacterWornItems(*db, params.CharacterId)
+	for _, wornItem := range characterWornItems {
+		if *wornItem.EquippedAt == params.Location {
+			return ctx.Status(fiber.StatusBadRequest).SendString("Equip location already occupied")
+		}
+	}
 
 	// insert character worn item
 	err = InsertCharacterWornItem(*db, params.CharacterId, params.CharacterItemId, params.Location)
@@ -381,12 +393,40 @@ func (characterController *CharacterController) AddCharacterWornItem(ctx *fiber.
 	}
 
 	// get updated worn item
-	characterWornItems, err := GetCharacterWornItems(*db, params.CharacterId)
+	characterWornItems, err = GetCharacterWornItems(*db, params.CharacterId)
 	if err != nil {
 		return err
 	}
 
 	// return worn items to user
+	return ctx.Status(fiber.StatusOK).JSON(characterWornItems)
+
+}
+
+func (characterController *CharacterController) RemoveCharacterWornItem(ctx *fiber.Ctx) error {
+
+	db := characterController.DB
+	// get characterItemId from params
+	characterWornItemId := ctx.Params("characterWornItemId")
+
+	// get character id from character worn item
+	characterId, err := getCharacterIdByCharacterWornItemId(*db, characterWornItemId)
+	if err != nil {
+		return err
+	}
+
+	// remove item id
+	err = DeleteCharacterWornItem(*db, characterWornItemId)
+	if err != nil {
+		return err
+	}
+
+	// get updated worn items list
+	characterWornItems, err := GetCharacterWornItems(*db, characterId)
+	if err != nil {
+		return err
+	}
+
 	return ctx.Status(fiber.StatusOK).JSON(characterWornItems)
 
 }

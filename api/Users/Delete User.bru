@@ -5,9 +5,13 @@ meta {
 }
 
 delete {
-  url: {{host}}/users/edb1cf7b-f49c-11f0-944c-be35d3ff38a0
+  url: {{host}}/users/:userId
   body: none
   auth: inherit
+}
+
+params:path {
+  userId: edb1cf7b-f49c-11f0-944c-be35d3ff38a0
 }
 
 settings {

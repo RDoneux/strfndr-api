@@ -1,5 +1,9 @@
 package models
 
+import (
+	"github.com/rdoneux/nmna-api/types"
+)
+
 type ItemType string
 type EquipLocation string
 
@@ -32,10 +36,13 @@ const (
 )
 
 type Item struct {
-	ID            string        `json:"id" db:"id"`
-	Name          string        `json:"name" db:"name"`
-	ItemType      ItemType      `json:"itemType" db:"item_type"`
-	Description   string        `json:"description" db:"description"`
-	Weight        float64       `json:"weight" db:"weight"`
-	Price         float64       `json:"price" db:"price"`
+	ID             string            `json:"id" db:"id"`
+	Name           string            `json:"name" db:"name"`
+	ItemType       ItemType          `json:"itemType" db:"item_type"`
+	Description    string            `json:"description" db:"description"`
+	Weight         float64           `json:"weight" db:"weight"`
+	Price          float64           `json:"price" db:"price"`
+	EquippedAt     *EquipLocation     `json:"equippedAt" db:"equipped_at"`
+	Quantity       uint16            `json:"quantity" db:"quantity"`
+	EquipLocations types.StringArray `json:"equipLocations" db:"equip_locations"`
 }

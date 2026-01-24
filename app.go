@@ -81,7 +81,8 @@ func main() {
 	app.Put("/protected/characters/item", characterController.AddCharacterItem)
 	app.Delete("/protected/characters/item/:characterItemId", characterController.RemoveCharacterItem)
 	app.Put("/protected/characters/background", characterController.UpdateCharacterBackground)
-	app.Put("/protected/character/worn-items", characterController.AddCharacterWornItem)
+	app.Put("/protected/characters/worn-items", characterController.AddCharacterWornItem)
+	app.Delete("/protected/characters/worn-items/:characterWornItemId", characterController.RemoveCharacterWornItem)
 
 	app.Listen(":3000")
 

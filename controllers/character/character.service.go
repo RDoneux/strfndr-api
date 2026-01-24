@@ -122,6 +122,30 @@ func GetCharacterIdByCharacterItemId(db sqlx.DB, characterItemId string) (string
 
 }
 
+func getCharacterIdByCharacterWornItemId(db sqlx.DB, characterWornItemId string) (string, error) {
+
+	query, args, err := squirrel.
+		Select("c.id").
+		From("character_worn_items cwi").
+		Join("characters c ON c.id = cwi.character_id").
+		Where("cwi.id = ?", characterWornItemId).
+		ToSql()
+	if err != nil {
+		return "", err
+	}
+
+	var props struct {
+		ID string `db:"id"`
+	}
+	err = db.Get(&props, query, args...)
+	if err != nil {
+		return "", err
+	}
+
+	return props.ID, nil
+
+}
+
 func GetCharacterInabilities(db sqlx.DB, characterId string) ([]models.Inability, error) {
 
 	query, args, err := squirrel.
@@ -147,10 +171,25 @@ func GetCharacterInabilities(db sqlx.DB, characterId string) ([]models.Inability
 func GetCharacterItems(db sqlx.DB, characterId string) ([]models.Item, error) {
 
 	query, args, err := squirrel.
-		Select("ci.id", "name", "item_type", "description", "weight", "price").
+		Select("ci.id",
+			"i.name",
+			"i.item_type",
+			"i.description",
+			"i.weight",
+			"i.price",
+			"ci.quantity",
+			"JSON_ARRAYAGG(iel.equip_location) AS equip_locations").
 		From("character_items ci").
 		Join("items i ON ci.item_id = i.id").
+		Join("item_equip_locations iel ON iel.item_id = i.id").
 		Where("ci.character_id = ?", characterId).
+		GroupBy("ci.id",
+			"i.name",
+			"i.description",
+			"i.weight",
+			"i.price",
+			"i.item_type",
+			"ci.quantity").
 		ToSql()
 	if err != nil {
 		return nil, err
@@ -169,11 +208,27 @@ func GetCharacterItems(db sqlx.DB, characterId string) ([]models.Item, error) {
 func GetCharacterWornItems(db sqlx.DB, characterId string) ([]models.Item, error) {
 
 	query, args, err := squirrel.
-		Select("i.id", "name", "item_type", "description", "weight", "price").
+		Select("i.id",
+			"i.name",
+			"i.item_type",
+			"i.description",
+			"i.weight",
+			"i.price",
+			"cwi.location as equipped_at",
+			"ci.quantity",
+			"JSON_ARRAYAGG(iel.equip_location) AS equip_locations").
 		From("character_worn_items cwi").
 		Join("character_items ci ON cwi.character_items_id = ci.id").
 		Join("items i ON ci.item_id = i.id").
+		Join("item_equip_locations iel ON iel.item_id = i.id").
 		Where("cwi.character_id = ?", characterId).
+		GroupBy("ci.id",
+			"i.name",
+			"i.description",
+			"i.weight",
+			"i.price",
+			"i.item_type",
+			"ci.quantity").
 		ToSql()
 	if err != nil {
 		return nil, err
@@ -189,12 +244,27 @@ func GetCharacterWornItems(db sqlx.DB, characterId string) ([]models.Item, error
 
 }
 
-func GetCharacterItemById (db sqlx.DB, characterItemId string) (models.Item, error) {
+func GetCharacterItemById(db sqlx.DB, characterItemId string) (models.Item, error) {
 
 	query, args, err := squirrel.
-		Select("i.id as id, name, item_type, description, weight, price").
+		Select("i.id",
+			"i.name",
+			"i.item_type",
+			"i.description",
+			"i.weight",
+			"i.price",
+			"ci.quantity",
+			"JSON_ARRAYAGG(iel.equip_location) AS equip_locations").
 		From("character_items ci").
 		Join("items i ON ci.item_id = i.id").
+		Join("item_equip_locations iel ON iel.item_id = i.id").
+		GroupBy("ci.id",
+			"i.name",
+			"i.description",
+			"i.weight",
+			"i.price",
+			"i.item_type",
+			"ci.quantity").
 		ToSql()
 	if err != nil {
 		return models.Item{}, err
@@ -208,7 +278,7 @@ func GetCharacterItemById (db sqlx.DB, characterItemId string) (models.Item, err
 
 	return item, nil
 
-}	
+}
 
 func InsertCharacterSkill(db sqlx.DB, characterId, skillId string) error {
 
@@ -349,7 +419,7 @@ func UpdateCharacterBackground(db sqlx.DB, characterBackground models.CharacterB
 
 }
 
-func GetCharacterBackground (db sqlx.DB, characterBackgroundId string) (models.CharacterBackground, error) {
+func GetCharacterBackground(db sqlx.DB, characterBackgroundId string) (models.CharacterBackground, error) {
 
 	query, args, err := squirrel.
 		Select("character_id", "name", "description").
@@ -369,12 +439,31 @@ func GetCharacterBackground (db sqlx.DB, characterBackgroundId string) (models.C
 	return characterBackground, nil
 }
 
-func InsertCharacterWornItem (db sqlx.DB, characterId, characterItemId string, location models.EquipLocation) error {
+func InsertCharacterWornItem(db sqlx.DB, characterId, characterItemId string, location models.EquipLocation) error {
 
 	query, args, err := squirrel.
 		Insert("character_worn_items").
 		Columns("character_id", "character_items_id", "location").
 		Values(characterId, characterItemId, location).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
+func DeleteCharacterWornItem(db sqlx.DB, characterWornItemId string) error {
+
+	query, args, err := squirrel.
+		Delete("character_worn_items cwi").
+		Where("cwi.id = ?", characterWornItemId).
 		ToSql()
 	if err != nil {
 		return err

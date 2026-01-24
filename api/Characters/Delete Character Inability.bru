@@ -5,9 +5,13 @@ meta {
 }
 
 delete {
-  url: {{host}}/protected/characters/inability/93e33a7d-f575-11f0-bbc4-de7a48c22a5f
+  url: {{host}}/protected/characters/inability/:characterInabilityId
   body: none
   auth: inherit
+}
+
+params:path {
+  characterInabilityId: 93e33a7d-f575-11f0-bbc4-de7a48c22a5f
 }
 
 settings {
