@@ -1,0 +1,43 @@
+meta {
+  name: Update Character Pool
+  type: http
+  seq: 13
+}
+
+put {
+  url: {{host}}/protected/characters/pool/:characterId
+  body: json
+  auth: inherit
+}
+
+params:path {
+  characterId: a3627a65-d248-4db9-896d-3501a70b0b73
+}
+
+body:json {
+  {
+    "mightCurrent": 1,
+    "mightMax": 2,
+    "mightEdge": 3,
+    "mightManualModifier": 4,
+    "mightEdgeManualModifier": 5,
+    "speedCurrent": 6,
+    "speedMax": 7,
+    "speedEdge": 8,
+    "speedManualModifier": 9,
+    "speedEdgeManualModifier": 10,
+    "intellectCurrent": 11,
+    "intellectMax": 12,
+    "intellectEdge": 13,
+    "intellectManualModifier": 14,
+    "intellectEdgeManualModifier": 15,
+    "armour": 16,
+    "armourManualModifier": 17,
+    "effort": 18
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

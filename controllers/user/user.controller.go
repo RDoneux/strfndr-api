@@ -1,4 +1,4 @@
-package controllers
+package user
 
 import (
 	"database/sql"
@@ -75,6 +75,7 @@ func (usersController *UsersController) GetUserById(ctx *fiber.Ctx) error {
 
 func (usersController *UsersController) GetUserByUsername(ctx *fiber.Ctx) error {
 
+	db := usersController.DB
 	// get username from query params
 	username := ctx.Query("username")
 	if username == "" {
@@ -82,30 +83,19 @@ func (usersController *UsersController) GetUserByUsername(ctx *fiber.Ctx) error 
 	}
 
 	// select user from db
-	query, args, err := squirrel.
-		Select("id", "display_name", "username").
-		From("users").
-		Where("username = ?", username).
-		ToSql()
-	if err != nil {
-		return err
-	}
-
-	var user models.PublicUser
-	err = usersController.DB.QueryRow(query, args...).Scan(&user.ID, &user.DisplayName, &user.Username)
-	if err == sql.ErrNoRows {
-		return ctx.Status(fiber.StatusNotFound).SendString("User not found")
-	}
+	user, err := GetUserByUsername(*db, username)
 	if err != nil {
 		return err
 	}
 
 	// return user to user
-	return ctx.Status(fiber.StatusOK).JSON(user);
+	return ctx.Status(fiber.StatusOK).JSON(user)
 
 }
 
 func (usersController *UsersController) CreateUser(ctx *fiber.Ctx) error {
+
+	db := usersController.DB
 
 	// get username and password from basic auth
 	username, password, ok := services.GetBasicAuth(ctx)
@@ -155,12 +145,19 @@ func (usersController *UsersController) CreateUser(ctx *fiber.Ctx) error {
 	}
 
 	// Execute insert query
-	_, err = usersController.DB.Exec(query, args...)
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	// Get inserted user
+	savedUser, err := GetUserByUsername(*db, username)
 	if err != nil {
 		return err
 	}
 
 	return ctx.Status(fiber.StatusCreated).JSON(fiber.Map{
+		"id":           savedUser.ID,
 		"accessToken":  accessToken,
 		"refreshToken": refreshToken,
 	})
@@ -223,7 +220,7 @@ func (usersController *UsersController) UpdateUser(ctx *fiber.Ctx) error {
 
 	// return tokens to user
 	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
-		"authToken": authToken,
+		"authToken":    authToken,
 		"refreshToken": refreshToken,
 	})
 
@@ -244,7 +241,7 @@ func (usersController *UsersController) DeleteUser(ctx *fiber.Ctx) error {
 	}
 	_, err = usersController.DB.Exec(query, args...)
 
-	// return status code 
-	return ctx.Status(fiber.StatusNoContent).Send(nil);
+	// return status code
+	return ctx.Status(fiber.StatusNoContent).Send(nil)
 
 }

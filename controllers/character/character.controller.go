@@ -410,7 +410,7 @@ func (characterController *CharacterController) RemoveCharacterWornItem(ctx *fib
 	characterWornItemId := ctx.Params("characterWornItemId")
 
 	// get character id from character worn item
-	characterId, err := getCharacterIdByCharacterWornItemId(*db, characterWornItemId)
+	characterId, err := GetCharacterIdByCharacterWornItemId(*db, characterWornItemId)
 	if err != nil {
 		return err
 	}
@@ -428,6 +428,69 @@ func (characterController *CharacterController) RemoveCharacterWornItem(ctx *fib
 	}
 
 	return ctx.Status(fiber.StatusOK).JSON(characterWornItems)
+
+}
+
+func (characterController *CharacterController) UpdateCharacterPool(ctx *fiber.Ctx) error {
+
+	db := characterController.DB
+
+	// get character pool & character id from body / path params
+	var characterPool models.CharacterPool
+	err := ctx.BodyParser(&characterPool)
+	characterId := ctx.Params("characterId")
+	if err != nil {
+		return nil
+	}
+
+	// dynamically create an update statement from the items in the pool
+	update := squirrel.
+		Update("character_pools").
+		Where("character_id = ?", characterId)
+
+	// MIGHT //
+	update = update.Set("might_current", characterPool.MightCurrent)
+	update = update.Set("might_max", characterPool.MightMax)
+	update = update.Set("might_edge", characterPool.MightEdge)
+	update = update.Set("might_manual_modifier", characterPool.MightManualModifer)
+	update = update.Set("might_edge_manual_modifier", characterPool.MightEdgeManualModifier)
+
+	// SPEED //
+	update = update.Set("speed_current", characterPool.SpeedCurrent)
+	update = update.Set("speed_max", characterPool.SpeedMax)
+	update = update.Set("speed_edge", characterPool.SpeedEdge)
+	update = update.Set("speed_manual_modifier", characterPool.SpeedManualModifer)
+	update = update.Set("speed_edge_manual_modifier", characterPool.SpeedEdgeManualModifier)
+
+	// INTELLECT //
+	update = update.Set("intellect_current", characterPool.IntellectCurrent)
+	update = update.Set("intellect_max", characterPool.IntellectMax)
+	update = update.Set("intellect_edge", characterPool.IntellectEdge)
+	update = update.Set("intellect_manual_modifier", characterPool.IntellectManualModifer)
+	update = update.Set("intellect_edge_manual_modifier", characterPool.IntellectEdgeManualModifier)
+
+	// ARMOUR //
+	update = update.Set("armour", characterPool.Armour)
+	update = update.Set("armour_manual_modifier", characterPool.ArmourManualModifier)
+
+	// EFFORT //
+	update = update.Set("effort", characterPool.Effort)
+
+	// execute query
+	query, args, err := update.ToSql()
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	// get updated pool
+	characterPool, err = GetCharacterPools(*db, characterId)
+	if err != nil {
+		return err
+	}
+
+	// return pool to user
+	return ctx.Status(fiber.StatusOK).JSON(characterPool)
 
 }
 

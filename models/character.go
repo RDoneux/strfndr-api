@@ -25,7 +25,7 @@ type Character struct {
 }
 
 type CharacterPool struct {
-	CPCharacterId               string `json:"characterId" db:"character_id"`
+	CharacterId                 string `json:"characterId" db:"character_id"`
 	MightCurrent                uint32 `json:"mightCurrent" db:"might_current"`
 	MightMax                    uint32 `json:"mightMax" db:"might_max"`
 	MightEdge                   uint32 `json:"mightEdge" db:"might_edge"`
@@ -42,7 +42,7 @@ type CharacterPool struct {
 	IntellectManualModifer      uint32 `json:"intellectManualModifier" db:"intellect_manual_modifier"`
 	IntellectEdgeManualModifier uint32 `json:"intellectEdgeManualModifier" db:"intellect_edge_manual_modifier"`
 	Armour                      uint32 `json:"armour"`
-	AmrourManualModifier        uint32 `json:"armourManualModifier" db:"armour_manual_modifier"`
+	ArmourManualModifier        uint32 `json:"armourManualModifier" db:"armour_manual_modifier"`
 	Effort                      uint32 `json:"effort"`
 }
 

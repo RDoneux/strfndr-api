@@ -10,6 +10,7 @@ import (
 
 	"github.com/rdoneux/nmna-api/controllers"
 	"github.com/rdoneux/nmna-api/controllers/character"
+	"github.com/rdoneux/nmna-api/controllers/user"
 )
 
 func main() {
@@ -47,7 +48,7 @@ func main() {
 		DB: database,
 	}
 
-	usersController := &controllers.UsersController{
+	usersController := &user.UsersController{
 		DB: database,
 	}
 
@@ -83,6 +84,7 @@ func main() {
 	app.Put("/protected/characters/background", characterController.UpdateCharacterBackground)
 	app.Put("/protected/characters/worn-items", characterController.AddCharacterWornItem)
 	app.Delete("/protected/characters/worn-items/:characterWornItemId", characterController.RemoveCharacterWornItem)
+	app.Put("/protected/characters/pool/:characterId", characterController.UpdateCharacterPool)
 
 	app.Listen(":3000")
 

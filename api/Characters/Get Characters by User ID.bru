@@ -5,9 +5,13 @@ meta {
 }
 
 get {
-  url: {{host}}/protected/characters/user/e3f17336-f574-11f0-bbc4-de7a48c22a5f
+  url: {{host}}/protected/characters/user/:userId
   body: none
   auth: inherit
+}
+
+params:path {
+  userId: 5762b920-f965-11f0-8d76-06b3fdb51f1c
 }
 
 settings {

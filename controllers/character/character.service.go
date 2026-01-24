@@ -122,7 +122,7 @@ func GetCharacterIdByCharacterItemId(db sqlx.DB, characterItemId string) (string
 
 }
 
-func getCharacterIdByCharacterWornItemId(db sqlx.DB, characterWornItemId string) (string, error) {
+func GetCharacterIdByCharacterWornItemId(db sqlx.DB, characterWornItemId string) (string, error) {
 
 	query, args, err := squirrel.
 		Select("c.id").
@@ -475,5 +475,26 @@ func DeleteCharacterWornItem(db sqlx.DB, characterWornItemId string) error {
 	}
 
 	return nil
+
+}
+
+func GetCharacterPools(db sqlx.DB, characterId string) (models.CharacterPool, error) {
+
+	query, args, err := squirrel.
+		Select("*").
+		From("character_pools").
+		Where("character_id = ?", characterId).
+		ToSql()
+	if err != nil {
+		return models.CharacterPool{}, err
+	}
+
+	var characterPool models.CharacterPool
+	err = db.Get(&characterPool, query, args...)
+	if err != nil {
+		return models.CharacterPool{}, err
+	}
+
+	return characterPool, nil
 
 }

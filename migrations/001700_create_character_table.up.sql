@@ -91,8 +91,7 @@ CREATE TABLE character_inabilities (
 );
 
 CREATE TABLE character_pools (
-    id VARCHAR(36) PRIMARY KEY DEFAULT(UUID()),
-    character_id VARCHAR(36),
+    character_id VARCHAR(36) PRIMARY KEY,
     might_current INT DEFAULT 0,
     might_max INT DEFAULT 0,
     might_edge INT DEFAULT 0,

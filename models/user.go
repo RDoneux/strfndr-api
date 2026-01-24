@@ -9,7 +9,7 @@ type User struct {
 
 type PublicUser struct {
 	ID          string `json:"id"`
-	DisplayName string `json:"displayName"`
+	DisplayName string `json:"displayName" db:"display_name"`
 	Username    string `json:"username"`
 }
 
