@@ -1,0 +1,20 @@
+meta {
+  name: Get Item by ID
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/protected/item/:itemId
+  body: none
+  auth: inherit
+}
+
+params:path {
+  itemId: f8a08a2a-f96c-11f0-8d76-06b3fdb51f1c
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

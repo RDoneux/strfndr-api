@@ -1,15 +1,17 @@
 package main
 
 import (
+	"os"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/jwt/v3"
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
 	"github.com/rdoneux/nmna-api/services"
-	"os"
 
 	"github.com/rdoneux/nmna-api/controllers"
 	"github.com/rdoneux/nmna-api/controllers/character"
+	"github.com/rdoneux/nmna-api/controllers/items"
 	"github.com/rdoneux/nmna-api/controllers/user"
 )
 
@@ -56,6 +58,10 @@ func main() {
 		DB: database,
 	}
 
+	itemController := &items.ItemsController {
+		DB: database,
+	}
+
 	// utils
 	app.Get("/health", utilsController.GetHealth)
 
@@ -87,6 +93,13 @@ func main() {
 	app.Delete("/protected/characters/item/:characterItemId", characterController.RemoveCharacterItem)
 	app.Delete("/protected/characters/worn-items/:characterWornItemId", characterController.RemoveCharacterWornItem)
 	app.Delete("/protected/characters/:characterId/archive", characterController.ArchiveCharacter)
+
+	// items
+	app.Get("/protected/item/:itemId", itemController.GetItemById)
+	app.Get("/protected/items", itemController.FindItemsByQuery)
+
+	app.Get("/items/types", itemController.GetItemTypes)
+	app.Get("/items/equip-locations", itemController.GetEquipLocations)
 
 	app.Listen(":3000")
 

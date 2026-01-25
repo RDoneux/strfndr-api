@@ -1,0 +1,23 @@
+meta {
+  name: Get Item by Query
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{host}}/protected/items?name=tent&type=equipment&priceMax=3&priceMin=2
+  body: none
+  auth: inherit
+}
+
+params:query {
+  name: tent
+  type: equipment
+  priceMax: 3
+  priceMin: 2
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

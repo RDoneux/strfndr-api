@@ -35,14 +35,28 @@ const (
 	NONE     EquipLocation = "None"
 )
 
+type ListItem struct {
+	ID          string   `json:"id" db:"id"`
+	Name        string   `json:"name" db:"name"`
+	ItemType    ItemType `json:"itemType" db:"item_type"`
+	Description string   `json:"description" db:"description"`
+	Weight      float64  `json:"weight" db:"weight"`
+	Price       float64  `json:"price" db:"price"`
+}
+
 type Item struct {
-	ID             string            `json:"id" db:"id"`
-	Name           string            `json:"name" db:"name"`
-	ItemType       ItemType          `json:"itemType" db:"item_type"`
-	Description    string            `json:"description" db:"description"`
-	Weight         float64           `json:"weight" db:"weight"`
-	Price          float64           `json:"price" db:"price"`
-	EquippedAt     *EquipLocation     `json:"equippedAt" db:"equipped_at"`
+	ListItem
+	EquippedAt     *EquipLocation    `json:"equippedAt" db:"equipped_at"`
 	Quantity       uint16            `json:"quantity" db:"quantity"`
 	EquipLocations types.StringArray `json:"equipLocations" db:"equip_locations"`
+}
+
+func (item *Item) ToList() map[string]any {
+	return map[string]any{
+		"name":        item.Name,
+		"description": item.Description,
+		"type":        item.ItemType,
+		"weight":      item.Weight,
+		"price":       item.Price,
+	}
 }

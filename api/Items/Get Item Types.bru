@@ -1,0 +1,15 @@
+meta {
+  name: Get Item Types
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{host}}/items/types
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
