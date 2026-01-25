@@ -308,6 +308,25 @@ func ConstructItemUpdateStatement(itemMap map[string]any, updateStatement squirr
 
 }
 
+func DeleteItem(db sqlx.DB, id string) error {
+
+	query, args, err := squirrel.
+		Delete("items").
+		Where("id = ?", id).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
 func convertMapBytesToString(m map[string]any) map[string]any {
 	for k, v := range m {
 		switch val := v.(type) {

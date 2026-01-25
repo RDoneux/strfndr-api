@@ -100,6 +100,7 @@ func main() {
 	app.Get("/protected/items", itemController.FindItemsByQuery)
 	app.Post("/protected/items", itemController.CreateItem)
 	app.Put("/protected/items/:itemId", itemController.UpdateItem)
+	app.Delete("/protected/items/:itemId", itemController.DeleteItem)
 
 	app.Get("/items/types", itemController.GetItemTypes)
 	app.Get("/items/equip-locations", itemController.GetEquipLocations)

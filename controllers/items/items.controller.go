@@ -225,3 +225,17 @@ func (itemsController *ItemsController) UpdateItem(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusOK).JSON(updatedItem)
 
 }
+
+func (itemsController *ItemsController) DeleteItem(ctx *fiber.Ctx) error {
+
+	db := itemsController.DB
+	itemId := ctx.Params("itemId")
+
+	err := DeleteItem(*db, itemId)
+	if err != nil {
+		return err
+	}
+
+	return ctx.SendStatus(fiber.StatusNoContent)
+
+}

@@ -1,0 +1,20 @@
+meta {
+  name: Delete Item
+  type: http
+  seq: 7
+}
+
+delete {
+  url: {{host}}/protected/items/:itemId
+  body: none
+  auth: inherit
+}
+
+params:path {
+  itemId: bbf837f6-eda8-4173-a165-c178f49c88b6
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
