@@ -1,0 +1,20 @@
+meta {
+  name: Get Skill by ID
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/protected/skill/:skillId
+  body: none
+  auth: inherit
+}
+
+params:path {
+  skillId: 3b775fbf-fa26-11f0-ab8a-221e8a416a64
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

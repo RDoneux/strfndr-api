@@ -13,6 +13,7 @@ import (
 	"github.com/rdoneux/nmna-api/controllers/authorisation"
 	"github.com/rdoneux/nmna-api/controllers/character"
 	"github.com/rdoneux/nmna-api/controllers/items"
+	"github.com/rdoneux/nmna-api/controllers/skills"
 	"github.com/rdoneux/nmna-api/controllers/user"
 )
 
@@ -63,6 +64,10 @@ func main() {
 		DB: database,
 	}
 
+	skillController := &skills.SkillsController {
+		DB: database,
+	}
+
 	// utils
 	app.Get("/health", utilsController.GetHealth)
 
@@ -104,6 +109,9 @@ func main() {
 
 	app.Get("/items/types", itemController.GetItemTypes)
 	app.Get("/items/equip-locations", itemController.GetEquipLocations)
+	
+	// skills
+	app.Get("/protected/skill/:skillId", skillController.GetSkillById)
 
 	app.Listen(":3000")
 
