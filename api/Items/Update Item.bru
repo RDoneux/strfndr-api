@@ -1,0 +1,90 @@
+meta {
+  name: Update Item
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{host}}/protected/items/:itemId
+  body: json
+  auth: inherit
+}
+
+params:path {
+  itemId: bbf837f6-eda8-4173-a165-c178f49c88b6
+}
+
+body:json {
+  // ** WEAPON **
+  {
+    "name": "Custom Weapon Updated",
+    "itemType": "WEAPON",
+    "description": "Custom Weapon Description",
+    "weight": 3,
+    "price": 4,
+    "capacity": 0,
+    "capacityType": "",
+    "weightType": "LIGHT"
+  }
+  // ** ARTIFACT **
+  // {
+  //   "name": "Custom Artifact Updated",
+  //   "itemType": "ARTIFACT",
+  //   "description": "Custom Artifact Description",
+  //   "weight": 3,
+  //   "price": 4,
+  //   "levelDescriptor": "1d6 + 5",
+  //   "depletion": "1 in 1d20",
+  //   "effect": "Cool stuff happens"
+  // }
+  // ** ODDITY **
+  // {
+  //   "name": "Custom Oddity",
+  //   "itemType": "ODDITY",
+  //   "description": "Custom Oddity Description",
+  //   "weight": 3,
+  //   "price": 4
+  // }
+  // ** EQUIPMENT **
+  // {
+  //   "name": "Custom Equipment",
+  //   "itemType": "EQUIPMENT",
+  //   "description": "Custom Equipment Description",
+  //   "weight": 3,
+  //   "price": 4
+  // }
+  // ** AMMUNITION **
+  // {
+  //   "name": "Custom Ammunition",
+  //   "itemType": "AMMUNITION",
+  //   "description": "Custom Ammunition Description",
+  //   "weight": 3,
+  //   "price": 4,
+  //   "type": "CUSTOM"
+  // }
+  // ** CYPHER ** 
+  // {
+  //   "name": "Custom Cypher",
+  //   "itemType": "CYPHER",
+  //   "description": "Custom Cypher Description",
+  //   "weight": 3,
+  //   "price": 4,
+  //   "cypherType": "ANOETIC",
+  //   "effect": "cool stuff",
+  //   "levelDescriptor": "1d6 + 1"
+  // }
+  // ** ARMOUR **
+  // {
+  //   "name": "Custom Armour",
+  //   "itemType": "ARMOUR",
+  //   "description": "Custom Armour Description",
+  //   "weight": 3,
+  //   "price": 4,
+  //   "weightType": "SPECIAL_LIGHT"
+  // }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

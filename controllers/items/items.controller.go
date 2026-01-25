@@ -148,7 +148,7 @@ func (itemsController *ItemsController) CreateItem(ctx *fiber.Ctx) error {
 
 	// create super item
 	targetTable := models.ItemTypeToTable[itemType]
-	insert, err := ConstructWeaponInsertStatement(itemMap, id, squirrel.Insert(targetTable))
+	insert, err := ConstructItemInsertStatement(itemMap, id, squirrel.Insert(targetTable))
 	query, args, err := insert.ToSql()
 	if err != nil {
 		return err
@@ -165,5 +165,63 @@ func (itemsController *ItemsController) CreateItem(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.Status(fiber.StatusCreated).JSON(fullInsertedItem)
+
+}
+
+func (itemsController *ItemsController) UpdateItem(ctx *fiber.Ctx) error {
+
+	db := itemsController.DB
+	itemId := ctx.Params("itemId")
+
+	var updateModel map[string]any
+	err := ctx.BodyParser(&updateModel)
+	if err != nil {
+		return err
+	}
+
+	// get item
+	itemMap, err := GetItemById(*db, itemId)
+	if err != nil {
+		return err
+	}
+
+	// the item type is used to construct custom insert statements
+	itemType, ok := itemMap["item_type"].(string)
+	if !ok {
+		return fiber.NewError(fiber.StatusBadRequest, "itemType is required and must be a string")
+	}
+
+	// update root item
+	item, err := services.MapToStruct[models.Item](updateModel)
+	if err != nil {
+		return err
+	}
+	err = UpdateRootItem(*db, item)
+	if err != nil {
+		return err
+	}
+
+	// construct update statement
+	targetTable := models.ItemTypeToTable[itemType]
+	updateStatement, err := ConstructItemUpdateStatement(updateModel, squirrel.Update(targetTable))
+	if err != nil {
+		return err
+	}
+	query, args, err := updateStatement.ToSql()
+	if err != nil {
+		return err
+	}
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	// get updated item & return to user
+	updatedItem, err := GetItemById(*db, itemId)
+	if err != nil {
+		return err
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(updatedItem)
 
 }

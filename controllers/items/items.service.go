@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
+	"strconv"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
@@ -48,7 +49,9 @@ func GetItemById(db sqlx.DB, itemId string) (map[string]any, error) {
 		if err := rows.MapScan(item); err != nil {
 			return nil, err
 		}
-		return convertMapBytesToString(item), nil
+		item = convertMapBytesToString(item)
+		convertNumericStringsToFloat(item, "price", "weight", "capacity")
+		return item, nil
 	}
 
 	return nil, sql.ErrNoRows
@@ -110,7 +113,26 @@ func CreateItem(db sqlx.DB, item models.Item) error {
 
 }
 
-func ConstructWeaponInsertStatement(itemMap map[string]any, id string, insertStatement squirrel.InsertBuilder) (squirrel.InsertBuilder, error) {
+func UpdateRootItem(db sqlx.DB, item models.Item) error {
+
+	query, args, err := squirrel.
+		Update("items").
+		Set("name", item.Name).
+		Set("description", item.Description).
+		Set("weight", item.Weight).
+		Set("price", item.Price).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	db.Exec(query, args...)
+
+	return nil
+
+}
+
+func ConstructItemInsertStatement(itemMap map[string]any, id string, insertStatement squirrel.InsertBuilder) (squirrel.InsertBuilder, error) {
 
 	itemType := itemMap["itemType"]
 
@@ -199,6 +221,93 @@ func ConstructWeaponInsertStatement(itemMap map[string]any, id string, insertSta
 	}
 }
 
+func ConstructItemUpdateStatement(itemMap map[string]any, updateStatement squirrel.UpdateBuilder) (squirrel.UpdateBuilder, error) {
+
+	itemType := itemMap["itemType"]
+
+	switch itemType {
+	case "WEAPON":
+
+		weapon, err := services.MapToStruct[models.Weapon](itemMap)
+		if err != nil {
+			return squirrel.UpdateBuilder{}, err
+		}
+
+		return updateStatement.
+			Set("capacity", weapon.Capacity).
+			Set("capacity_type", weapon.CapacityType).
+			Set("weight_type", weapon.WeightType), nil
+
+	case "ARTIFACT":
+
+		artifact, err := services.MapToStruct[models.Artifact](itemMap)
+		if err != nil {
+			return squirrel.UpdateBuilder{}, err
+		}
+
+		return updateStatement.
+			Set("level_descriptor", artifact.LevelDescriptor).
+			Set("depletion", artifact.Depletion).
+			Set("effect", artifact.Effect), nil
+
+	case "ODDITY":
+
+		// oddity has no additional properties yet
+		_, err := services.MapToStruct[models.Oddity](itemMap)
+		if err != nil {
+			return squirrel.UpdateBuilder{}, err
+		}
+
+		return updateStatement, nil
+
+	case "EQUIPMENT":
+
+		// equipment has no additional properties yet
+		_, err := services.MapToStruct[models.Equipment](itemMap)
+		if err != nil {
+			return squirrel.UpdateBuilder{}, err
+		}
+
+		return updateStatement, nil
+
+	case "AMMUNITION":
+
+		ammunition, err := services.MapToStruct[models.Ammunition](itemMap)
+		if err != nil {
+			return squirrel.UpdateBuilder{}, err
+		}
+
+		return updateStatement.
+			Set("type", ammunition.Type), nil
+
+	case "CYPHER":
+
+		cypher, err := services.MapToStruct[models.Cypher](itemMap)
+		if err != nil {
+			return squirrel.UpdateBuilder{}, err
+		}
+
+		return updateStatement.
+			Set("cypher_type", cypher.CypherType).
+			Set("level_descriptor", cypher.LevelDescriptor).
+			Set("effect", cypher.Effect), nil
+
+	case "ARMOUR":
+
+		armour, err := services.MapToStruct[models.Armour](itemMap)
+		if err != nil {
+			return squirrel.UpdateBuilder{}, err
+		}
+
+		return updateStatement.
+			Set("weight_type", armour.WeightType), nil
+
+	default:
+		return updateStatement, errors.New("Item Type not recognised")
+	}
+
+}
+
 func convertMapBytesToString(m map[string]any) map[string]any {
 	for k, v := range m {
 		switch val := v.(type) {
@@ -207,4 +316,16 @@ func convertMapBytesToString(m map[string]any) map[string]any {
 		}
 	}
 	return m
+}
+
+func convertNumericStringsToFloat(m map[string]any, keys ...string) {
+    for _, k := range keys {
+        if v, ok := m[k]; ok {
+            if s, ok := v.(string); ok {
+                if f, err := strconv.ParseFloat(s, 64); err == nil {
+                    m[k] = f
+                }
+            }
+        }
+    }
 }
