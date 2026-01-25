@@ -1,8 +1,11 @@
 package items
 
 import (
+	"encoding/json"
 	"regexp"
 	"strconv"
+
+	"github.com/google/uuid"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/gofiber/fiber/v2"
@@ -114,5 +117,128 @@ func (itemsController *ItemsController) GetEquipLocations(ctx *fiber.Ctx) error 
 	}
 
 	return ctx.Status(fiber.StatusOK).JSON(enumValues)
+
+}
+
+func (itemsController *ItemsController) CreateItem(ctx *fiber.Ctx) error {
+
+	db := itemsController.DB
+	id := uuid.New().String()
+
+	var itemMap map[string]any
+	err := ctx.BodyParser(&itemMap)
+	if err != nil {
+		return err
+	}
+
+	itemType, ok := itemMap["itemType"].(string)
+	if !ok {
+		return fiber.NewError(fiber.StatusBadRequest, "itemType is required and must be a string")
+	}
+
+	// insert base item
+	itemJson, err := json.Marshal(itemMap)
+	if err != nil {
+		return err
+	}
+
+	var item models.Item
+	err = json.Unmarshal(itemJson, &item)
+	item.ID = id
+	if err != nil {
+		return err
+	}
+
+	err = CreateItem(*db, item)
+
+	// create super item
+	targetTable := models.ItemTypeToTable[itemType]
+
+	insert := squirrel.Insert(targetTable)
+
+	switch itemType {
+	case "WEAPON":
+
+		var weapon models.Weapon
+		err = json.Unmarshal(itemJson, &weapon)
+
+		insert = insert.
+			Columns("capacity", "capacity_type", "weight_type", "item_id").
+			Values(weapon.Capacity, weapon.CapacityType, weapon.WeightType, id)
+
+	case "ARTIFACT":
+
+		var artifact models.Artifact
+		err = json.Unmarshal(itemJson, &artifact)
+
+		insert = insert.
+			Columns("level_descriptor", "depletion", "effect", "item_id").
+			Values(artifact.LevelDescriptor, artifact.Depletion, artifact.Effect, id)
+
+	case "ODDITY":
+
+		var oddity models.Oddity
+		err = json.Unmarshal(itemJson, &oddity)
+
+		insert = insert.
+			Columns("item_id").
+			Values(id)
+
+	case "EQUIPMENT":
+
+		var equipment models.Equipment
+		err = json.Unmarshal(itemJson, &equipment)
+
+		insert = insert.
+			Columns("item_id").
+			Values(id)
+
+	case "AMMUNITION":
+
+		var ammunition models.Ammunition
+		err = json.Unmarshal(itemJson, &ammunition)
+
+		insert = insert.
+			Columns("item_id", "type").
+			Values(id, ammunition.Type)
+
+	case "CYPHER":
+
+		var cypher models.Cypher
+		err = json.Unmarshal(itemJson, &cypher)
+
+		insert = insert.
+			Columns("item_id", "cypher_type", "level_descriptor", "effect").
+			Values(id, cypher.CypherType, cypher.LevelDescriptor, cypher.Effect)
+
+	case "ARMOUR":
+
+		var armour models.Armour
+		err = json.Unmarshal(itemJson, &armour)
+
+		insert = insert.
+			Columns("item_id", "weight_type").
+			Values(id, armour.WeightType)
+
+	default:
+
+	}
+
+	query, args, err := insert.ToSql()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	fullInsertedItem, err := GetItemById(*db, id)
+	if err != nil {
+		return err
+	}
+
+	return ctx.Status(fiber.StatusCreated).JSON(fullInsertedItem)
 
 }

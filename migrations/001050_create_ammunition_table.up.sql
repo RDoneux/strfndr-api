@@ -1,4 +1,4 @@
-CREATE TABLE ammunition (
+CREATE TABLE ammunitions (
     id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
     item_id VARCHAR(36),
     type VARCHAR(100) NOT NULL,

@@ -79,7 +79,7 @@ VALUES (
     );
 
 INSERT INTO
-    armour (item_id, weight_type)
+    armours (item_id, weight_type)
 VALUES (
         (
             SELECT id
@@ -190,7 +190,7 @@ INSERT INTO
 VALUES (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -206,7 +206,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -222,7 +222,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -238,7 +238,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -254,7 +254,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -270,7 +270,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -286,7 +286,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -302,7 +302,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -318,7 +318,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -334,7 +334,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -350,7 +350,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -366,7 +366,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -382,7 +382,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -398,7 +398,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -414,7 +414,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -430,7 +430,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -446,7 +446,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -462,7 +462,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -478,7 +478,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -494,7 +494,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -510,7 +510,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -526,7 +526,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -542,7 +542,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -558,7 +558,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -574,7 +574,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -590,7 +590,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -606,7 +606,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -622,7 +622,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -638,7 +638,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -654,7 +654,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -670,7 +670,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -686,7 +686,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id
@@ -702,7 +702,7 @@ VALUES (
     (
         (
             SELECT item_id
-            FROM armour
+            fROM armours
             WHERE
                 item_id = (
                     SELECT id

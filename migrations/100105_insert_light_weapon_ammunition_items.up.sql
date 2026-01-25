@@ -20,7 +20,7 @@ INSERT INTO items (
         'AMMUNITION'
     );
 
-INSERT INTO ammunition (
+INSERT INTO ammunitions (
     item_id,
     type
 ) VALUES 

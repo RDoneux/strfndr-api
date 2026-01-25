@@ -1,0 +1,86 @@
+meta {
+  name: Create Item
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{host}}/protected/items
+  body: json
+  auth: inherit
+}
+
+body:json {
+  // ** WEAPON **
+  {
+    "name": "Custom Weapon",
+    "itemType": "WEAPON",
+    "description": "Custom Weapon Description",
+    "weight": 3,
+    "price": 4,
+    "capacity": 0,
+    "capacityType": "",
+    "weightType": "LIGHT"
+  }
+  // ** ARTIFACT **
+  // {
+  //   "name": "Custom Artifact",
+  //   "itemType": "ARTIFACT",
+  //   "description": "Custom Artifact Description",
+  //   "weight": 3,
+  //   "price": 4,
+  //   "levelDescriptor": "1d6 + 5",
+  //   "depletion": "1 in 1d20",
+  //   "effect": "Cool stuff happens"
+  // }
+  // ** ODDITY **
+  // {
+  //   "name": "Custom Oddity",
+  //   "itemType": "ODDITY",
+  //   "description": "Custom Oddity Description",
+  //   "weight": 3,
+  //   "price": 4
+  // }
+  // ** EQUIPMENT **
+  // {
+  //   "name": "Custom Equipment",
+  //   "itemType": "EQUIPMENT",
+  //   "description": "Custom Equipment Description",
+  //   "weight": 3,
+  //   "price": 4
+  // }
+  // ** AMMUNITION **
+  // {
+  //   "name": "Custom Ammunition",
+  //   "itemType": "AMMUNITION",
+  //   "description": "Custom Ammunition Description",
+  //   "weight": 3,
+  //   "price": 4,
+  //   "type": "CUSTOM"
+  // }
+  // ** CYPHER ** 
+  // {
+  //   "name": "Custom Cypher",
+  //   "itemType": "CYPHER",
+  //   "description": "Custom Cypher Description",
+  //   "weight": 3,
+  //   "price": 4,
+  //   "cypherType": "ANOETIC",
+  //   "effect": "cool stuff",
+  //   "levelDescriptor": "1d6 + 1"
+  // }
+  // ** ARMOUR **
+  // {
+  //   "name": "Custom Armour",
+  //   "itemType": "ARMOUR",
+  //   "description": "Custom Armour Description",
+  //   "weight": 3,
+  //   "price": 4,
+  //   "weightType": "SPECIAL_LIGHT"
+  // }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

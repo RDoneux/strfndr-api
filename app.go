@@ -97,6 +97,7 @@ func main() {
 	// items
 	app.Get("/protected/item/:itemId", itemController.GetItemById)
 	app.Get("/protected/items", itemController.FindItemsByQuery)
+	app.Post("/protected/items", itemController.CreateItem)
 
 	app.Get("/items/types", itemController.GetItemTypes)
 	app.Get("/items/equip-locations", itemController.GetEquipLocations)

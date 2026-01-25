@@ -5,5 +5,5 @@ CREATE TABLE armour_pool_modifiers (
     modifier_value INT DEFAULT 0,
     edge_value INT DEFAULT 0,
     
-    FOREIGN KEY (armour_id) REFERENCES armour(item_id) ON DELETE CASCADE
+    FOREIGN KEY (armour_id) REFERENCES armours(item_id) ON DELETE CASCADE
 )

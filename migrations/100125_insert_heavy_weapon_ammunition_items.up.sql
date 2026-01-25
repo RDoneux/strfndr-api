@@ -15,7 +15,7 @@ VALUES (
     );
 
 INSERT INTO
-    ammunition (item_id, type)
+    ammunitions (item_id, type)
 VALUES (
         (
             SELECT id

@@ -3,10 +3,10 @@ package items
 import (
 	"database/sql"
 	"encoding/json"
-	"strings"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
+	"github.com/rdoneux/nmna-api/models"
 )
 
 func GetItemById(db sqlx.DB, itemId string) (map[string]any, error) {
@@ -26,7 +26,7 @@ func GetItemById(db sqlx.DB, itemId string) (map[string]any, error) {
 		return nil, err
 	}
 
-	joinTable := strings.ToLower(itemType) + "s"
+	joinTable := models.ItemTypeToTable[itemType]
 	joinClause := joinTable + " ON items.id = " + joinTable + ".item_id"
 	query, args, err = squirrel.
 		Select("*").
@@ -81,6 +81,30 @@ func GetItemTypes(db sqlx.DB) ([]string, error) {
 	err = json.Unmarshal([]byte(result.Types), &itemTypes)
 
 	return itemTypes, nil
+
+}
+
+func CreateItem(db sqlx.DB, item models.Item) error {
+
+    columns := []string{"name", "description", "weight", "price", "item_type"}
+    values := []any{item.Name, item.Description, item.Weight, item.Price, item.ItemType}
+
+    if item.ID != "" {
+        columns = append([]string{"id"}, columns...)
+        values = append([]any{item.ID}, values...)
+    }
+
+    query, args, err := squirrel.
+        Insert("items").
+        Columns(columns...).
+        Values(values...).
+        ToSql()
+    if err != nil {
+        return err
+    }
+
+    _, err = db.Exec(query, args...)
+    return err
 
 }
 
