@@ -1,7 +1,6 @@
 package items
 
 import (
-	"encoding/json"
 	"regexp"
 	"strconv"
 
@@ -11,6 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/jmoiron/sqlx"
 	"github.com/rdoneux/nmna-api/models"
+	"github.com/rdoneux/nmna-api/services"
 )
 
 type ItemsController struct {
@@ -125,115 +125,40 @@ func (itemsController *ItemsController) CreateItem(ctx *fiber.Ctx) error {
 	db := itemsController.DB
 	id := uuid.New().String()
 
+	// get item. left as map because could be on of any of the item types
 	var itemMap map[string]any
 	err := ctx.BodyParser(&itemMap)
 	if err != nil {
 		return err
 	}
 
+	// the item type is used to construct custom insert statements
 	itemType, ok := itemMap["itemType"].(string)
 	if !ok {
 		return fiber.NewError(fiber.StatusBadRequest, "itemType is required and must be a string")
 	}
 
-	// insert base item
-	itemJson, err := json.Marshal(itemMap)
-	if err != nil {
-		return err
-	}
-
-	var item models.Item
-	err = json.Unmarshal(itemJson, &item)
+	// insert base item by casting the map to the Item model
+	item, err := services.MapToStruct[models.Item](itemMap)
 	item.ID = id
+	err = CreateItem(*db, item)
 	if err != nil {
 		return err
 	}
-
-	err = CreateItem(*db, item)
 
 	// create super item
 	targetTable := models.ItemTypeToTable[itemType]
-
-	insert := squirrel.Insert(targetTable)
-
-	switch itemType {
-	case "WEAPON":
-
-		var weapon models.Weapon
-		err = json.Unmarshal(itemJson, &weapon)
-
-		insert = insert.
-			Columns("capacity", "capacity_type", "weight_type", "item_id").
-			Values(weapon.Capacity, weapon.CapacityType, weapon.WeightType, id)
-
-	case "ARTIFACT":
-
-		var artifact models.Artifact
-		err = json.Unmarshal(itemJson, &artifact)
-
-		insert = insert.
-			Columns("level_descriptor", "depletion", "effect", "item_id").
-			Values(artifact.LevelDescriptor, artifact.Depletion, artifact.Effect, id)
-
-	case "ODDITY":
-
-		var oddity models.Oddity
-		err = json.Unmarshal(itemJson, &oddity)
-
-		insert = insert.
-			Columns("item_id").
-			Values(id)
-
-	case "EQUIPMENT":
-
-		var equipment models.Equipment
-		err = json.Unmarshal(itemJson, &equipment)
-
-		insert = insert.
-			Columns("item_id").
-			Values(id)
-
-	case "AMMUNITION":
-
-		var ammunition models.Ammunition
-		err = json.Unmarshal(itemJson, &ammunition)
-
-		insert = insert.
-			Columns("item_id", "type").
-			Values(id, ammunition.Type)
-
-	case "CYPHER":
-
-		var cypher models.Cypher
-		err = json.Unmarshal(itemJson, &cypher)
-
-		insert = insert.
-			Columns("item_id", "cypher_type", "level_descriptor", "effect").
-			Values(id, cypher.CypherType, cypher.LevelDescriptor, cypher.Effect)
-
-	case "ARMOUR":
-
-		var armour models.Armour
-		err = json.Unmarshal(itemJson, &armour)
-
-		insert = insert.
-			Columns("item_id", "weight_type").
-			Values(id, armour.WeightType)
-
-	default:
-
-	}
-
+	insert, err := ConstructWeaponInsertStatement(itemMap, id, squirrel.Insert(targetTable))
 	query, args, err := insert.ToSql()
 	if err != nil {
 		return err
 	}
-
 	_, err = db.Exec(query, args...)
 	if err != nil {
 		return err
 	}
 
+	// get the inserted super item and return it to the user
 	fullInsertedItem, err := GetItemById(*db, id)
 	if err != nil {
 		return err

@@ -1,6 +1,7 @@
 - [x] Move Token Expiries to env var
 - [x] Return user id with tokens when user is created
 - [ ] Can remove is_equipped from db schema
+- [ ] Consolidate user services
 
 ### For Characters
 

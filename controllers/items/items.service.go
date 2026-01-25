@@ -3,10 +3,12 @@ package items
 import (
 	"database/sql"
 	"encoding/json"
+	"errors"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
 	"github.com/rdoneux/nmna-api/models"
+	"github.com/rdoneux/nmna-api/services"
 )
 
 func GetItemById(db sqlx.DB, itemId string) (map[string]any, error) {
@@ -86,34 +88,123 @@ func GetItemTypes(db sqlx.DB) ([]string, error) {
 
 func CreateItem(db sqlx.DB, item models.Item) error {
 
-    columns := []string{"name", "description", "weight", "price", "item_type"}
-    values := []any{item.Name, item.Description, item.Weight, item.Price, item.ItemType}
+	columns := []string{"name", "description", "weight", "price", "item_type"}
+	values := []any{item.Name, item.Description, item.Weight, item.Price, item.ItemType}
 
-    if item.ID != "" {
-        columns = append([]string{"id"}, columns...)
-        values = append([]any{item.ID}, values...)
-    }
+	if item.ID != "" {
+		columns = append([]string{"id"}, columns...)
+		values = append([]any{item.ID}, values...)
+	}
 
-    query, args, err := squirrel.
-        Insert("items").
-        Columns(columns...).
-        Values(values...).
-        ToSql()
-    if err != nil {
-        return err
-    }
+	query, args, err := squirrel.
+		Insert("items").
+		Columns(columns...).
+		Values(values...).
+		ToSql()
+	if err != nil {
+		return err
+	}
 
-    _, err = db.Exec(query, args...)
-    return err
+	_, err = db.Exec(query, args...)
+	return err
 
 }
 
+func ConstructWeaponInsertStatement(itemMap map[string]any, id string, insertStatement squirrel.InsertBuilder) (squirrel.InsertBuilder, error) {
+
+	itemType := itemMap["itemType"]
+
+	switch itemType {
+	case "WEAPON":
+
+		weapon, err := services.MapToStruct[models.Weapon](itemMap)
+		if err != nil {
+			return squirrel.InsertBuilder{}, err
+		}
+
+		return insertStatement.
+			Columns("capacity", "capacity_type", "weight_type", "item_id").
+			Values(weapon.Capacity, weapon.CapacityType, weapon.WeightType, id), nil
+
+	case "ARTIFACT":
+
+		artifact, err := services.MapToStruct[models.Artifact](itemMap)
+		if err != nil {
+			return squirrel.InsertBuilder{}, err
+		}
+
+		return insertStatement.
+			Columns("level_descriptor", "depletion", "effect", "item_id").
+			Values(artifact.LevelDescriptor, artifact.Depletion, artifact.Effect, id), nil
+
+	case "ODDITY":
+
+		// oddity has no additional properties yet
+		_, err := services.MapToStruct[models.Oddity](itemMap)
+		if err != nil {
+			return squirrel.InsertBuilder{}, err
+		}
+
+		return insertStatement.
+			Columns("item_id").
+			Values(id), nil
+
+	case "EQUIPMENT":
+
+		// equipment has no additional properties yet
+		_, err := services.MapToStruct[models.Equipment](itemMap)
+		if err != nil {
+			return squirrel.InsertBuilder{}, err
+		}
+
+		return insertStatement.
+			Columns("item_id").
+			Values(id), nil
+
+	case "AMMUNITION":
+
+		ammunition, err := services.MapToStruct[models.Ammunition](itemMap)
+		if err != nil {
+			return squirrel.InsertBuilder{}, err
+		}
+
+		return insertStatement.
+			Columns("item_id", "type").
+			Values(id, ammunition.Type), nil
+
+	case "CYPHER":
+
+		cypher, err := services.MapToStruct[models.Cypher](itemMap)
+		if err != nil {
+			return squirrel.InsertBuilder{}, err
+		}
+
+		return insertStatement.
+			Columns("item_id", "cypher_type", "level_descriptor", "effect").
+			Values(id, cypher.CypherType, cypher.LevelDescriptor, cypher.Effect), nil
+
+	case "ARMOUR":
+
+		armour, err := services.MapToStruct[models.Armour](itemMap)
+		if err != nil {
+			return squirrel.InsertBuilder{}, err
+		}
+
+		return insertStatement.
+			Columns("item_id", "weight_type").
+			Values(id, armour.WeightType), nil
+
+	default:
+		return insertStatement, errors.New("Item Type not recognised")
+	}
+}
+
 func convertMapBytesToString(m map[string]any) map[string]any {
-    for k, v := range m {
-        switch val := v.(type) {
-        case []byte:
-            m[k] = string(val)
-        }
-    }
-    return m
+	for k, v := range m {
+		switch val := v.(type) {
+		case []byte:
+			m[k] = string(val)
+		}
+	}
+	return m
 }
