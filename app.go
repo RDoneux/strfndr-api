@@ -10,6 +10,7 @@ import (
 	"github.com/rdoneux/nmna-api/services"
 
 	"github.com/rdoneux/nmna-api/controllers"
+	"github.com/rdoneux/nmna-api/controllers/authorisation"
 	"github.com/rdoneux/nmna-api/controllers/character"
 	"github.com/rdoneux/nmna-api/controllers/items"
 	"github.com/rdoneux/nmna-api/controllers/user"
@@ -46,7 +47,7 @@ func main() {
 		DB: database,
 	}
 
-	authController := &controllers.AuthorisationController{
+	authController := &authorisation.AuthorisationController{
 		DB: database,
 	}
 

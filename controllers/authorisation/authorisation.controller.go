@@ -1,4 +1,4 @@
-package controllers
+package authorisation
 
 import (
 	"crypto/sha256"
@@ -84,7 +84,7 @@ func (securityController *AuthorisationController) RefreshToken(ctx *fiber.Ctx) 
 func (securityController *AuthorisationController) SignIn(ctx *fiber.Ctx) error {
 
 	// get basic auth
-	username, password, ok := services.GetBasicAuth(ctx)
+	username, password, ok := GetBasicAuth(ctx)
 	if ok != true {
 		return fiber.ErrNotAcceptable
 	}

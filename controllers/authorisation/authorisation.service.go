@@ -1,4 +1,4 @@
-package services
+package authorisation
 
 import (
 	"encoding/base64"

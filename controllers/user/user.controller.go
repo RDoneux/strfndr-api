@@ -2,11 +2,13 @@ package user
 
 import (
 	"database/sql"
+
 	"github.com/jmoiron/sqlx"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/gofiber/fiber/v2"
 
+	"github.com/rdoneux/nmna-api/controllers/authorisation"
 	"github.com/rdoneux/nmna-api/models"
 	"github.com/rdoneux/nmna-api/services"
 )
@@ -98,7 +100,7 @@ func (usersController *UsersController) CreateUser(ctx *fiber.Ctx) error {
 	db := usersController.DB
 
 	// get username and password from basic auth
-	username, password, ok := services.GetBasicAuth(ctx)
+	username, password, ok := authorisation.GetBasicAuth(ctx)
 	if ok != true {
 		return fiber.ErrNotAcceptable
 	}
