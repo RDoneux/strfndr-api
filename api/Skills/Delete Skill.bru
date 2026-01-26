@@ -1,0 +1,20 @@
+meta {
+  name: Delete Skill
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{host}}/protected/skills/:skillId
+  body: none
+  auth: inherit
+}
+
+params:path {
+  skillId: b57a89a8-8f48-40d2-8561-b3877953da01
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

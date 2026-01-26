@@ -166,7 +166,7 @@ INSERT INTO skills (
     'You can perform simple tricks: temporarily change the colour or basic appearance of a small object, cause small objects to float through the air, clean a small area, mend a broken object, prepare (but not create) food, and so on. You can''t use hedge magic to harm another creature of object.',
     0,
     0,
-    '1 Intellect Point',
+    1,
     'ESOTERY'
 ),
 (

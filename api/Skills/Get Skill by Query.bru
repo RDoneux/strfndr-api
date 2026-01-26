@@ -1,0 +1,22 @@
+meta {
+  name: Get Skill by Query
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{host}}/protected/skills?name=animal&category=MIGHT&type=PASSIVE
+  body: none
+  auth: inherit
+}
+
+params:query {
+  name: animal
+  category: MIGHT
+  type: PASSIVE
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

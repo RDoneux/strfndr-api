@@ -60,11 +60,11 @@ func main() {
 		DB: database,
 	}
 
-	itemController := &items.ItemsController {
+	itemController := &items.ItemsController{
 		DB: database,
 	}
 
-	skillController := &skills.SkillsController {
+	skillController := &skills.SkillsController{
 		DB: database,
 	}
 
@@ -112,6 +112,13 @@ func main() {
 	
 	// skills
 	app.Get("/protected/skill/:skillId", skillController.GetSkillById)
+	app.Get("/protected/skills", skillController.FindSkillByQuery)
+	app.Post("/protected/skills", skillController.CreateSkill)
+	app.Put("/protected/skills/:skillId", skillController.UpdateSkill)
+	app.Delete("/protected/skills/:skillId", skillController.DeleteSkill)
+
+	app.Get("/skills/categories", skillController.GetSkillCategories)
+	app.Get("/skills/types", skillController.GetSkillTypes)
 
 	app.Listen(":3000")
 

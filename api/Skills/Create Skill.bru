@@ -1,0 +1,28 @@
+meta {
+  name: Create Skill
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{host}}/protected/skills
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "custom skill",
+    "category": "MIGHT",
+    "description": "custom skill description",
+    "attackModifier": 1,
+    "armourModifier": 2,
+    "cost": 3,
+    "type": "FIGHTING_MOVE"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

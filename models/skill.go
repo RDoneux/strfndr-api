@@ -26,8 +26,8 @@ const (
 	TRICK_OF_THE_TRADE             SkillType = "Trick of the Trade"
 )
 
-type Skill struct {
-	CharacterSkillId string        `json:"characterSkillId" db:"id"`
+type ListSkill struct {
+	ID string        `json:"id" db:"id"`
 	Name             string        `json:"name"`
 	Category         SkillCategory `json:"category"`
 	Description      string        `json:"description"`
@@ -35,6 +35,10 @@ type Skill struct {
 	ArmourModifier   int16         `json:"armourModifier" db:"armour_modifier"`
 	Cost             int16         `json:"cost"`
 	Type             SkillType     `json:"type"`
+}
+
+type Skill struct {
+	ListSkill
 }
 
 type Inability struct {

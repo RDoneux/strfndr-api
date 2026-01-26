@@ -1,7 +1,6 @@
 package items
 
 import (
-	"regexp"
 	"strconv"
 
 	"github.com/google/uuid"
@@ -88,56 +87,24 @@ func (itemsController *ItemsController) FindItemsByQuery(ctx *fiber.Ctx) error {
 
 }
 
-func (itemsController *ItemsController) GetItemTypes(ctx *fiber.Ctx) error {
-
-	itemTypes, err := GetItemTypes(*itemsController.DB)
-	if err != nil {
-		return err
-	}
-
-	return ctx.Status(fiber.StatusOK).JSON(itemTypes)
-}
-
-func (itemsController *ItemsController) GetEquipLocations(ctx *fiber.Ctx) error {
-
-	db := itemsController.DB
-
-	var columnType string
-	err := db.Get(&columnType, "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'character_worn_items' AND COLUMN_NAME = 'location'")
-	if err != nil {
-		return err
-	}
-
-	regex := regexp.MustCompile(`'([^']*)'`)
-	matches := regex.FindAllStringSubmatch(columnType, -1)
-
-	var enumValues []string
-	for _, match := range matches {
-		enumValues = append(enumValues, match[1])
-	}
-
-	return ctx.Status(fiber.StatusOK).JSON(enumValues)
-
-}
-
 func (itemsController *ItemsController) CreateItem(ctx *fiber.Ctx) error {
-
+	
 	db := itemsController.DB
 	id := uuid.New().String()
-
+	
 	// get item. left as map because could be on of any of the item types
 	var itemMap map[string]any
 	err := ctx.BodyParser(&itemMap)
 	if err != nil {
 		return err
 	}
-
+	
 	// the item type is used to construct custom insert statements
 	itemType, ok := itemMap["itemType"].(string)
 	if !ok {
 		return fiber.NewError(fiber.StatusBadRequest, "itemType is required and must be a string")
 	}
-
+	
 	// insert base item by casting the map to the Item model
 	item, err := services.MapToStruct[models.Item](itemMap)
 	item.ID = id
@@ -145,7 +112,7 @@ func (itemsController *ItemsController) CreateItem(ctx *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-
+	
 	// create super item
 	targetTable := models.ItemTypeToTable[itemType]
 	insert, err := ConstructItemInsertStatement(itemMap, id, squirrel.Insert(targetTable))
@@ -157,40 +124,40 @@ func (itemsController *ItemsController) CreateItem(ctx *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-
+	
 	// get the inserted super item and return it to the user
 	fullInsertedItem, err := GetItemById(*db, id)
 	if err != nil {
 		return err
 	}
-
+	
 	return ctx.Status(fiber.StatusCreated).JSON(fullInsertedItem)
-
+	
 }
 
 func (itemsController *ItemsController) UpdateItem(ctx *fiber.Ctx) error {
-
+	
 	db := itemsController.DB
 	itemId := ctx.Params("itemId")
-
+	
 	var updateModel map[string]any
 	err := ctx.BodyParser(&updateModel)
 	if err != nil {
 		return err
 	}
-
+	
 	// get item
 	itemMap, err := GetItemById(*db, itemId)
 	if err != nil {
 		return err
 	}
-
+	
 	// the item type is used to construct custom insert statements
 	itemType, ok := itemMap["item_type"].(string)
 	if !ok {
 		return fiber.NewError(fiber.StatusBadRequest, "itemType is required and must be a string")
 	}
-
+	
 	// update root item
 	item, err := services.MapToStruct[models.Item](updateModel)
 	if err != nil {
@@ -200,7 +167,7 @@ func (itemsController *ItemsController) UpdateItem(ctx *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-
+	
 	// construct update statement
 	targetTable := models.ItemTypeToTable[itemType]
 	updateStatement, err := ConstructItemUpdateStatement(updateModel, squirrel.Update(targetTable))
@@ -215,27 +182,49 @@ func (itemsController *ItemsController) UpdateItem(ctx *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-
+	
 	// get updated item & return to user
 	updatedItem, err := GetItemById(*db, itemId)
 	if err != nil {
 		return err
 	}
-
+	
 	return ctx.Status(fiber.StatusOK).JSON(updatedItem)
-
+	
 }
 
 func (itemsController *ItemsController) DeleteItem(ctx *fiber.Ctx) error {
-
+	
 	db := itemsController.DB
 	itemId := ctx.Params("itemId")
-
+	
 	err := DeleteItem(*db, itemId)
 	if err != nil {
 		return err
 	}
-
+	
 	return ctx.SendStatus(fiber.StatusNoContent)
+	
+}
+
+func (itemsController *ItemsController) GetItemTypes(ctx *fiber.Ctx) error {
+
+	itemTypes, err := GetItemTypes(*itemsController.DB)
+	if err != nil {
+		return err
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(itemTypes)
+}
+
+func (itemsController *ItemsController) GetEquipLocations(ctx *fiber.Ctx) error {
+
+	db := itemsController.DB
+	equipLocations, err := services.GetEnumValue(*db, "character_worn_items", "location")
+	if err != nil {
+		return err
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(equipLocations)
 
 }

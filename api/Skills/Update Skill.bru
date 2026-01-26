@@ -1,0 +1,32 @@
+meta {
+  name: Update Skill
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{host}}/protected/skills/:skillId
+  body: json
+  auth: inherit
+}
+
+params:path {
+  skillId: b57a89a8-8f48-40d2-8561-b3877953da01
+}
+
+body:json {
+  {
+    "name": "custom skill updated",
+    "category": "MIGHT",
+    "description": "custom skill description",
+    "attackModifier": 1,
+    "armourModifier": 2,
+    "cost": 3,
+    "type": "FIGHTING_MOVE"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
