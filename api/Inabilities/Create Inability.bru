@@ -1,0 +1,23 @@
+meta {
+  name: Create Inability
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{host}}/protected/inabilities
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Custom Inability",
+    "description": "Custom Inability Description"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

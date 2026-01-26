@@ -1,0 +1,20 @@
+meta {
+  name: Get Inability by ID
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/protected/inability/:inabilityId
+  body: none
+  auth: inherit
+}
+
+params:path {
+  inabilityId: 42e1785c-fa8e-11f0-895a-76405f595f3a
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

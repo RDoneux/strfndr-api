@@ -2,8 +2,8 @@
 - [x] Return user id with tokens when user is created
 - [ ] Can remove is_equipped from db schema
 - [x] Consolidate user services
-- [ ] Skills endpoints
-- [ ] Inabilities endpoints
+- [x] Skills endpoints
+- [x] Inabilities endpoints
 
 ### For Characters
 

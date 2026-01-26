@@ -1,0 +1,20 @@
+meta {
+  name: Delete Inability
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{host}}/protected/inabilities/:inabilityId
+  body: none
+  auth: inherit
+}
+
+params:path {
+  inabilityId: 74a0d998-7992-4f62-86be-8ae8d7c4dde3
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

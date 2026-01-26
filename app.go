@@ -12,6 +12,7 @@ import (
 	"github.com/rdoneux/nmna-api/controllers"
 	"github.com/rdoneux/nmna-api/controllers/authorisation"
 	"github.com/rdoneux/nmna-api/controllers/character"
+	"github.com/rdoneux/nmna-api/controllers/inabilities"
 	"github.com/rdoneux/nmna-api/controllers/items"
 	"github.com/rdoneux/nmna-api/controllers/skills"
 	"github.com/rdoneux/nmna-api/controllers/user"
@@ -68,6 +69,10 @@ func main() {
 		DB: database,
 	}
 
+	inabilityController := &inabilities.InabilitiesController {
+		DB: database,
+	}
+
 	// utils
 	app.Get("/health", utilsController.GetHealth)
 
@@ -119,6 +124,13 @@ func main() {
 
 	app.Get("/skills/categories", skillController.GetSkillCategories)
 	app.Get("/skills/types", skillController.GetSkillTypes)
+
+	// inabilities
+	app.Get("/protected/inability/:inabilityId", inabilityController.GetInabilityById)
+	app.Get("/protected/inabilities", inabilityController.FindInabilitiesByQuery)
+	app.Post("/protected/inabilities", inabilityController.CreateInability)
+	app.Put("/protected/inabilities/:inabilityId", inabilityController.UpdateInability)
+	app.Delete("/protected/inabilities/:inabilityId", inabilityController.DeleteInability)
 
 	app.Listen(":3000")
 

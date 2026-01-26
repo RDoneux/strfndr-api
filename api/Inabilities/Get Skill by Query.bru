@@ -1,0 +1,20 @@
+meta {
+  name: Get Skill by Query
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{host}}/protected/inabilities?name=Will
+  body: none
+  auth: inherit
+}
+
+params:query {
+  name: Will
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,27 @@
+meta {
+  name: Update Inability
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{host}}/protected/inabilities/:inabilityId
+  body: json
+  auth: inherit
+}
+
+params:path {
+  inabilityId: 74a0d998-7992-4f62-86be-8ae8d7c4dde3
+}
+
+body:json {
+  {
+    "name": "updated inability name",
+    "description": "udpated inability description"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
